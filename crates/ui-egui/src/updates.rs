@@ -11,8 +11,8 @@ use egui::{Align, Layout};
 
 use crate::{PdfCraftApp, theme, widgets};
 
-/// Where every PdfCraft release is listed.
-pub const RELEASES_PAGE: &str = "https://github.com/storytold/pdfcraft/releases";
+/// Where every Vértice PDF release is listed.
+pub const RELEASES_PAGE: &str = "https://github.com/satoshid3v/vertice-pdf/releases";
 
 /// The latest published release.
 #[derive(Clone, Debug, PartialEq, Eq)]
