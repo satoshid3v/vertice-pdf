@@ -1,17 +1,55 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PdfCraft</title>
+    <meta name="author" content="Vertice Codeium" />
+    <meta name="description" content="Vértice PDF - Suite PDF de alto rendimiento desarrollada en Rust. Inspirado en PdfCraft." />
+    <title>Vértice PDF - Vertice Code</title>
+    <link data-trunk rel="copy-file" href="brand-logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="brand-logo.svg" />
     <link data-trunk rel="rust" data-wasm-opt="z" />
     <style>
       html, body { margin: 0; height: 100%; overflow: hidden; background: #f1f1f3; }
       canvas { width: 100%; height: 100%; display: block; outline: none; }
-      @media (prefers-color-scheme: dark) { html, body { background: #19191c; } }
+      .brand-footer {
+        position: fixed;
+        bottom: 8px;
+        right: 14px;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        color: #475569;
+        z-index: 9999;
+        pointer-events: none;
+        user-select: none;
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 3px 10px;
+        border-radius: 9999px;
+        border: 1px solid rgba(203, 213, 225, 0.6);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+      @media (prefers-color-scheme: dark) {
+        html, body { background: #19191c; }
+        .brand-footer {
+          color: #94a3b8;
+          background: rgba(30, 41, 59, 0.75);
+          border-color: rgba(51, 65, 85, 0.6);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+      }
     </style>
   </head>
   <body>
     <canvas id="pdfcraft"></canvas>
+    <footer class="brand-footer">
+      <span>Desarrollado por <strong>Vertice Codeium</strong></span>
+      <span>•</span>
+      <span>Inspirado en <strong>PdfCraft</strong></span>
+    </footer>
   </body>
 </html>
