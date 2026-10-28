@@ -480,11 +480,11 @@ pub fn mode_bar(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
         .frame(egui::Frame::NONE.fill(t.chrome).inner_margin(egui::Margin::symmetric(10, 0)).stroke(Stroke::new(1.0, t.divider)))
         .show(ui, |ui| {
             ui.horizontal_centered(|ui| {
-                ui.spacing_mut().item_spacing.x = 2.0;
+                ui.spacing_mut().item_spacing.x = 6.0;
                 main_menu(app, ui);
-                ui.add_space(6.0);
+                ui.add_space(4.0);
                 ui.painter().vline(ui.cursor().left(), ui.max_rect().y_range().shrink(12.0), Stroke::new(1.0, t.divider));
-                ui.add_space(10.0);
+                ui.add_space(6.0);
                 for (mode, label) in
                     [(Mode::AllTools, "All tools"), (Mode::Read, "Read"), (Mode::Edit, "Edit"), (Mode::Convert, "Convert"), (Mode::Sign, "E-Sign")]
                 {
@@ -509,8 +509,41 @@ pub fn mode_bar(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
                             app.dialog = Some(Dialog::Properties(PropsTab::Description));
                         }
                     });
-                    ui.add_space(8.0);
-                    if widgets::search_box(ui, tl!("Find tools and commands"), 260.0).clicked() {
+
+                    // Top-bar Zoom Controls (fluid integration, doesn't obstruct bottom-right)
+                    if let Some(index) = app.active {
+                        let view = &mut app.views[index];
+                        let zoom_pct = format!("{:.0}%", view.zoom * 100.0);
+
+                        let tip_in = crate::commands::key_tip(ui.ctx(), tl!("Zoom in ({key})"), crate::commands::ZOOM_IN);
+                        if icons::button(ui, "zoom-in", 30.0, false, &tip_in).clicked() {
+                            view.zoom_step(true);
+                        }
+                        let zoom_btn = egui::Button::new(egui::RichText::new(&zoom_pct).font(theme::medium(11.5)).color(t.text))
+                            .fill(egui::Color32::TRANSPARENT)
+                            .stroke(Stroke::NONE)
+                            .min_size(vec2(38.0, 24.0));
+                        if ui.add(zoom_btn).on_hover_text(tl!("Toggle fit page / fit width")).clicked() {
+                            view.fit = if view.fit == Fit::Width { Fit::Page } else { Fit::Width };
+                        }
+                        let tip_out = crate::commands::key_tip(ui.ctx(), tl!("Zoom out ({key})"), crate::commands::ZOOM_OUT);
+                        if icons::button(ui, "zoom-out", 30.0, false, &tip_out).clicked() {
+                            view.zoom_step(false);
+                        }
+
+                        ui.add_space(4.0);
+                        ui.painter().vline(ui.cursor().left(), ui.max_rect().y_range().shrink(14.0), Stroke::new(1.0, t.divider));
+                        ui.add_space(4.0);
+                    }
+
+                    ui.add_space(6.0);
+                    let avail = ui.available_width();
+                    if avail > 280.0 {
+                        let sw = (avail - 60.0).clamp(140.0, 240.0);
+                        if widgets::search_box(ui, tl!("Find tools and commands"), sw).clicked() {
+                            app.palette_open = true;
+                        }
+                    } else if icons::button(ui, "search", 32.0, false, tl!("Find tools and commands")).clicked() {
                         app.palette_open = true;
                     }
                 });

@@ -2968,10 +2968,14 @@ impl eframe::App for PdfCraftApp {
             // there, so its buttons (Bookmarks, Page thumbnails, ...) must open their panels.
             // Outside Read mode the docking workspace draws the inspector.
             if self.mode == Mode::Read && self.right.is_some() {
+                let screen_w = ctx.input(|i| i.viewport_rect().width());
+                let max_w = (screen_w - 52.0).clamp(160.0, 520.0);
+                let default_w = 330.0_f32.min(max_w);
+                let min_w = 160.0_f32.min(max_w);
                 egui::Panel::right("read_right_panel")
                     .resizable(true)
-                    .default_size(330.0)
-                    .size_range(260.0..=520.0)
+                    .default_size(default_w)
+                    .size_range(min_w..=max_w)
                     .frame(egui::Frame::NONE)
                     .show(ui, |ui| panels::right_panel(self, ui));
             }

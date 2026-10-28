@@ -22,29 +22,66 @@ pub fn show(app: &mut PdfCraftApp, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
     egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
         egui::Frame::NONE.inner_margin(egui::Margin { left: 36, right: 36, top: 28, bottom: 28 }).show(ui, |ui| {
-            ui.label(egui::RichText::new("Te damos la bienvenida a Vértice PDF").font(theme::semibold(24.0)));
-            ui.label(
-                egui::RichText::new("Suite PDF de alto rendimiento — local, privada y segura.")
-                    .color(t.text_muted)
-                    .font(theme::regular(14.0)),
-            );
-            ui.add_space(14.0);
+            // Hero Card: Cero telemetría y Máxima Privacidad
             egui::Frame::NONE
                 .fill(t.card)
                 .stroke(Stroke::new(1.0, t.border))
-                .corner_radius(CornerRadius::same(12))
-                .inner_margin(egui::Margin::same(14))
+                .corner_radius(CornerRadius::same(14))
+                .inner_margin(egui::Margin::symmetric(28, 22))
                 .show(ui, |ui| {
                     ui.set_width(ui.available_width());
+
+                    // Large Prominent Title requested by user
+                    ui.label(
+                        egui::RichText::new("Sin trazabilidad • 100% privado • Todo corre en tu navegador")
+                            .font(theme::semibold(21.0))
+                            .color(t.accent_text),
+                    );
+                    ui.add_space(4.0);
+                    ui.label(
+                        egui::RichText::new("Cero telemetría. Todo el procesamiento y renderizado ocurre localmente en tu dispositivo sin enviar datos a ningún servidor.")
+                            .color(t.text_muted)
+                            .font(theme::regular(14.0)),
+                    );
+                    ui.add_space(16.0);
+
+                    // Prominent Primary Action: "Abrir PDF"
                     ui.horizontal(|ui| {
-                        widgets::artcraft_mark(ui, 28.0);
-                        ui.vertical(|ui| {
-                            ui.label(egui::RichText::new("Vertice Code").font(theme::semibold(15.0)));
-                            ui.label(egui::RichText::new("Desarrollado por Vertice Codeium · Inspirado en PdfCraft.").color(t.text_muted));
-                        });
+                        let btn = egui::Button::new(
+                            egui::RichText::new("📂  Abrir PDF")
+                                .font(theme::semibold(15.0))
+                                .color(egui::Color32::WHITE),
+                        )
+                        .fill(t.accent)
+                        .corner_radius(CornerRadius::same(10))
+                        .min_size(vec2(160.0, 42.0));
+
+                        if ui.add(btn).clicked() {
+                            app.open_dialog();
+                        }
+
+                        ui.add_space(14.0);
+                        ui.label(
+                            egui::RichText::new("o arrastra y suelta tu archivo PDF aquí")
+                                .color(t.text_muted)
+                                .font(theme::regular(13.5)),
+                        );
+                    });
+
+                    ui.add_space(14.0);
+                    ui.separator();
+                    ui.add_space(8.0);
+
+                    ui.horizontal(|ui| {
+                        widgets::artcraft_mark(ui, 24.0);
+                        ui.label(
+                            egui::RichText::new("Vértice PDF · Desarrollado por Vertice Codeium · Inspirado en PdfCraft.")
+                                .color(t.text_faint)
+                                .font(theme::regular(12.0)),
+                        );
                     });
                 });
-            ui.add_space(22.0);
+            ui.add_space(20.0);
 
             egui::Frame::NONE
                 .fill(t.card)

@@ -1,17 +1,153 @@
 <!doctype html>
+<!-- Desarrollado por Vertice Codeium · Inspirado en PdfCraft -->
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Vertice Codeium" />
-    <meta name="description" content="Vértice PDF - Suite PDF de alto rendimiento desarrollada en Rust. Inspirado en PdfCraft." />
+    <meta name="description" content="Vértice PDF - Suite PDF de alto rendimiento desarrollada en Rust. Sin trazabilidad • 100% privado • Todo corre en tu navegador." />
     <title>Vértice PDF - Vertice Code</title>
     <link data-trunk rel="copy-file" href="brand-logo.svg" />
     <link rel="icon" type="image/svg+xml" href="brand-logo.svg" />
     <link data-trunk rel="rust" data-wasm-opt="z" />
     <style>
-      html, body { margin: 0; height: 100%; overflow: hidden; background: #f1f1f3; }
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
       canvas { width: 100%; height: 100%; display: block; outline: none; }
+      
+      /* Apple-style Instant Splash Screen */
+      #loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #f8fafc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+      }
+      #loading-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .loading-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 440px;
+        padding: 32px 24px;
+      }
+      .brand-icon-wrap {
+        position: relative;
+        width: 72px;
+        height: 72px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        animation: pulse-glow 2.5s infinite ease-in-out;
+      }
+      .brand-icon-wrap svg {
+        width: 44px;
+        height: 44px;
+      }
+      .loading-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.02em;
+      }
+      .loading-subtitle {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0 0 24px 0;
+        font-weight: 400;
+      }
+      .spinner-container {
+        width: 140px;
+        height: 4px;
+        background: #e2e8f0;
+        border-radius: 9999px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 28px;
+      }
+      .spinner-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 40%;
+        background: #2563eb;
+        border-radius: 9999px;
+        animation: indeterminate 1.4s infinite ease-in-out;
+      }
+      .privacy-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 9999px;
+        color: #1d4ed8;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin-bottom: 10px;
+      }
+      .privacy-badge svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+      .privacy-desc {
+        font-size: 11.5px;
+        color: #94a3b8;
+        margin: 0;
+      }
+      
+      @keyframes indeterminate {
+        0% { left: -40%; width: 30%; }
+        50% { left: 35%; width: 50%; }
+        100% { left: 100%; width: 30%; }
+      }
+      @keyframes pulse-glow {
+        0%, 100% { transform: scale(1); box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15); }
+        50% { transform: scale(1.03); box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.25); }
+      }
+      
+      /* Dark mode splash */
+      @media (prefers-color-scheme: dark) {
+        html, body, #loading-screen { background: #0f172a; }
+        .brand-icon-wrap {
+          background: #1e293b;
+          border-color: #334155;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .brand-icon-wrap svg path {
+          stroke: #60a5fa;
+        }
+        .loading-title { color: #f8fafc; }
+        .loading-subtitle { color: #94a3b8; }
+        .spinner-container { background: #334155; }
+        .spinner-bar { background: #3b82f6; }
+        .privacy-badge {
+          background: rgba(30, 58, 138, 0.3);
+          border-color: rgba(59, 130, 246, 0.4);
+          color: #93c5fd;
+        }
+        .privacy-desc { color: #64748b; }
+      }
+      
       .brand-footer {
         position: fixed;
         bottom: 8px;
@@ -34,7 +170,6 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       }
       @media (prefers-color-scheme: dark) {
-        html, body { background: #19191c; }
         .brand-footer {
           color: #94a3b8;
           background: rgba(30, 41, 59, 0.75);
@@ -45,11 +180,64 @@
     </style>
   </head>
   <body>
+    <!-- Pantalla de Carga Instantánea (Vertice Codeium) -->
+    <div id="loading-screen">
+      <div class="loading-card">
+        <div class="brand-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 8 9 L 2 13 L 8 19 L 12 3 L 16 19 L 22 13 L 16 9" 
+                  stroke="#2563EB" 
+                  stroke-width="3" 
+                  stroke-linecap="butt" 
+                  stroke-linejoin="miter" 
+                  stroke-miterlimit="10" />
+          </svg>
+        </div>
+        <h1 class="loading-title">Vértice PDF</h1>
+        <p class="loading-subtitle">Cargando suite de alta fidelidad...</p>
+        
+        <div class="spinner-container">
+          <div class="spinner-bar"></div>
+        </div>
+        
+        <div class="privacy-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Sin trazabilidad • 100% privado • Todo corre en tu navegador</span>
+        </div>
+        <p class="privacy-desc">Cero telemetría. Tus documentos nunca salen de tu dispositivo.</p>
+      </div>
+    </div>
+
     <canvas id="pdfcraft"></canvas>
     <footer class="brand-footer">
       <span>Desarrollado por <strong>Vertice Codeium</strong></span>
       <span>•</span>
       <span>Inspirado en <strong>PdfCraft</strong></span>
     </footer>
+
+    <script>
+      window.__dismissLoadingScreen = function() {
+        const el = document.getElementById("loading-screen");
+        if (el && !el.classList.contains("fade-out")) {
+          el.classList.add("fade-out");
+          setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 600);
+        }
+      };
+
+      // Escuchar cuando el canvas webgl comienza a pintar
+      const canvas = document.getElementById("pdfcraft");
+      if (canvas) {
+        const checkReady = () => {
+          if (canvas.width > 0 && canvas.height > 0) {
+            window.__dismissLoadingScreen();
+          } else {
+            requestAnimationFrame(checkReady);
+          }
+        };
+        requestAnimationFrame(checkReady);
+      }
+    </script>
   </body>
 </html>

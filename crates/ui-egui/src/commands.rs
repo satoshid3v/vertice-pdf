@@ -698,6 +698,10 @@ impl PdfCraftApp {
                 }
             }
         }
+        // Standard Ctrl+Y alias for Redo (especially common on Windows / Linux / Web)
+        if !typing && ctx.input_mut(|i| i.consume_shortcut(&KeyboardShortcut::new(Modifiers::COMMAND, Key::Y))) {
+            self.execute("edit.redo");
+        }
     }
 }
 

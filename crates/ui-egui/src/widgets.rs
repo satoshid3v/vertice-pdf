@@ -103,27 +103,35 @@ pub(crate) fn paint_left(ui: &egui::Ui, pos: egui::Pos2, text: &str, font: egui:
     ui.painter().with_clip_rect(clip).text(pos, Align2::LEFT_CENTER, shown, font, color);
 }
 
-/// A mode-bar tab: text with an underline when active.
+/// A mode-bar tab: text with subtle accent pill background and indicator when active.
 pub fn mode_tab(ui: &mut egui::Ui, label: &str, active: bool) -> Response {
     let t = Tokens::get(ui.ctx());
     let font = if active { theme::semibold(13.5) } else { theme::medium(13.5) };
     let w = ui.fonts_mut(|f| f.layout_no_wrap(label.to_owned(), font.clone(), t.text).size().x);
-    let (rect, resp) = ui.allocate_exact_size(vec2(w + 22.0, 48.0), Sense::click());
+    let (rect, resp) = ui.allocate_exact_size(vec2(w + 20.0, 48.0), Sense::click());
     resp.widget_info(|| egui::WidgetInfo::selected(egui::WidgetType::Button, ui.is_enabled(), active, label));
     let press = theme::Press::track(ui, &resp);
-    let well = rect.shrink2(vec2(2.0, 9.0));
+    let well = rect.shrink2(vec2(2.0, 8.0));
     if active {
+        ui.painter().rect_filled(well, CornerRadius::same(8), t.accent.gamma_multiply(0.14));
         if press.down > 0.01 {
-            ui.painter().rect_filled(well, CornerRadius::same(6), t.pressed.gamma_multiply(press.down));
+            ui.painter().rect_filled(well, CornerRadius::same(8), t.pressed.gamma_multiply(press.down));
         }
     } else {
-        press.wash(ui, well, 6, false);
+        press.wash(ui, well, 8, false);
     }
     let body = rect.translate(press.offset());
-    ui.painter().text(body.center(), Align2::CENTER_CENTER, label, font, if active { t.text } else { t.text_muted });
+    let text_color = if active {
+        t.accent_text
+    } else if resp.hovered() {
+        t.text
+    } else {
+        t.text_muted
+    };
+    ui.painter().text(body.center(), Align2::CENTER_CENTER, label, font, text_color);
     if active {
-        let r = Rect::from_min_max(rect.left_bottom() + vec2(10.0, -2.0), rect.right_bottom() - vec2(10.0, 0.0));
-        ui.painter().rect_filled(r, CornerRadius { nw: 1, ne: 1, sw: 0, se: 0 }, t.accent);
+        let r = Rect::from_min_max(rect.left_bottom() + vec2(8.0, -3.0), rect.right_bottom() - vec2(8.0, 0.0));
+        ui.painter().rect_filled(r, CornerRadius { nw: 2, ne: 2, sw: 0, se: 0 }, t.accent);
     }
     theme::hand(resp)
 }

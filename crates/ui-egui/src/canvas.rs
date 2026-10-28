@@ -178,7 +178,7 @@ pub struct ViewDefaults {
 impl Default for ViewDefaults {
     fn default() -> Self {
         // Single page, scrolling continuously at fit width: the earlier "continuous" default.
-        Self { layout: PageLayout::Single, continuous: true, fit: Fit::Width, zoom: 1.0, highlight_fields: false }
+        Self { layout: PageLayout::Single, continuous: true, fit: Fit::Width, zoom: 1.0, highlight_fields: true }
     }
 }
 
@@ -2930,16 +2930,16 @@ pub fn document_area(app: &mut PdfCraftApp, index: usize, ui: &mut egui::Ui) {
                     for w in f.widgets.iter().filter(|w| w.page == Some(i) && !w.hidden) {
                         let r = w.rect;
                         let sr = xf.user_rect(info, i, [r[0] as f32, r[1] as f32, r[2] as f32, r[3] as f32]);
-                        let tint = Color32::from_rgba_unmultiplied(0x6E, 0x8E, 0xF5, 48);
+                        let tint = Color32::from_rgba_unmultiplied(37, 99, 235, 60);
                         let (width, color) =
-                            if required { (2.0, Color32::from_rgb(0xE3, 0x22, 0x22)) } else { (1.0, Color32::from_rgb(0x6E, 0x8E, 0xF5)) };
+                            if required { (2.0, Color32::from_rgb(0xDC, 0x26, 0x26)) } else { (1.5, Color32::from_rgb(37, 99, 235)) };
                         if round {
                             let radius = sr.width().min(sr.height()) / 2.0;
                             painter.circle_filled(sr.center(), radius, tint);
                             painter.circle_stroke(sr.center(), radius - width / 2.0, Stroke::new(width, color));
                         } else {
-                            painter.rect_filled(sr, CornerRadius::same(1), tint);
-                            painter.rect_stroke(sr, CornerRadius::same(1), Stroke::new(width, color), egui::StrokeKind::Inside);
+                            painter.rect_filled(sr, CornerRadius::same(2), tint);
+                            painter.rect_stroke(sr, CornerRadius::same(2), Stroke::new(width, color), egui::StrokeKind::Inside);
                         }
                     }
                 }

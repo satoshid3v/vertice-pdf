@@ -75,6 +75,9 @@ fn main() {
                 }),
             )
             .await;
+        if started.is_ok() {
+            let _ = js_sys::eval("window.__dismissLoadingScreen && window.__dismissLoadingScreen()");
+        }
         if let Err(e) = started {
             eframe::web_sys::console::error_1(&e);
             if query_param("host").as_deref() == Some("parent")
