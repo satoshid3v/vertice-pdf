@@ -632,27 +632,20 @@ impl crate::PdfCraftApp {
 
     /// Edit a PDF ▸ Add content ▸ Image: pick a file and place it in the middle of the current page.
     pub fn add_image_dialog(&mut self) {
-        #[cfg(not(target_arch = "wasm32"))]
-        self.pick_image(tl!("Choose an image"), |app, name, bytes| app.add_image(name, bytes));
-        #[cfg(target_arch = "wasm32")]
-        self.notify_tr("Adding images arrives on the web with file pickers for images");
+        if self.active.is_none() {
+            self.notify_tr("Open a document first");
+            return;
+        }
+        self.pick_files(crate::files::FilePurpose::AddImage, false);
     }
 
     /// Edit text & images ▸ Replace Image: pick a file to draw in a page image's place.
     pub(crate) fn replace_page_image_dialog(&mut self, page: usize, index: usize) {
-        #[cfg(not(target_arch = "wasm32"))]
-        self.pick_image(tl!("Replace image"), move |app, name, bytes| {
-            app.apply_edit(Edit::EditPageImage {
-                page,
-                index,
-                change: pdfcraft_engine::ImageEdit::Replace { name, bytes: std::sync::Arc::new(bytes) },
-            });
-        });
-        #[cfg(target_arch = "wasm32")]
-        self.notify_fmt(
-            "Replacing images on page {p} arrives on the web with image pickers ({i})",
-            &[("p", &(page + 1).to_string()), ("i", &index.to_string())],
-        );
+        if self.active.is_none() {
+            self.notify_tr("Open a document first");
+            return;
+        }
+        self.pick_files(crate::files::FilePurpose::ReplacePageImage { page, index }, false);
     }
 
     /// Edit text & images ▸ Save Image As.
@@ -712,15 +705,11 @@ impl crate::PdfCraftApp {
 
     /// Edit image ▸ Replace: pick a file for the selected image.
     pub fn replace_image_dialog(&mut self, page: usize, index: usize) {
-        #[cfg(not(target_arch = "wasm32"))]
-        self.pick_image(tl!("Replace image"), move |app, name, bytes| {
-            app.apply_edit(Edit::ReplaceImage { page, index, name, bytes: std::sync::Arc::new(bytes) });
-        });
-        #[cfg(target_arch = "wasm32")]
-        {
-            let _ = (page, index);
-            self.notify_tr("Replacing images arrives on the web with image file pickers");
+        if self.active.is_none() {
+            self.notify_tr("Open a document first");
+            return;
         }
+        self.pick_files(crate::files::FilePurpose::ReplaceImage { page, index }, false);
     }
 
     /// Place image `bytes` in the middle of the current page and select it.

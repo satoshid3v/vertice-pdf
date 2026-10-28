@@ -26,6 +26,18 @@ pub enum FilePurpose {
     CreateMultipleSeparate,
     /// Find text and redact ▸ Import list: a text file with one word or phrase per line.
     RedactWords,
+    /// Edit a PDF ▸ Add content ▸ Image: pick an image file.
+    AddImage,
+    /// Edit text & images ▸ Replace Image: pick an image file.
+    ReplaceImage {
+        page: usize,
+        index: usize,
+    },
+    /// Edit text & images ▸ Replace Page Image: pick an image file.
+    ReplacePageImage {
+        page: usize,
+        index: usize,
+    },
 }
 
 /// Discover installed document fonts off the GUI thread, only when the picker is opened.
@@ -60,13 +72,27 @@ pub(crate) fn installed_font_files(ctx: &egui::Context) -> Option<Vec<pdfcraft_e
 /// The picker for `purpose`: PDFs, and for Create and Insert also what they convert.
 fn files_picker(purpose: FilePurpose) -> rfd::AsyncFileDialog {
     let dialog = rfd::AsyncFileDialog::new();
+    if matches!(purpose, FilePurpose::AddImage | FilePurpose::ReplaceImage { .. } | FilePurpose::ReplacePageImage { .. }) {
+        return dialog
+            .add_filter(tl!("Images"), &["png", "jpg", "jpeg", "tif", "tiff", "gif", "bmp", "webp", "jp2", "j2k", "jpx"])
+            .set_title(tl!("Choose an image"));
+    }
     if matches!(purpose, FilePurpose::TextFont { .. }) {
         return dialog.add_filter("TrueType / OpenType font", &["ttf", "otf"]);
     }
     if purpose == FilePurpose::RedactWords {
         return dialog.add_filter(tl!("Text"), &["txt"]);
     }
-    if !matches!(purpose, FilePurpose::CreateMultiple | FilePurpose::CreateMultipleSeparate | FilePurpose::InsertPages | FilePurpose::Combine) {
+    if !matches!(
+        purpose,
+        FilePurpose::CreateMultiple
+            | FilePurpose::CreateMultipleSeparate
+            | FilePurpose::InsertPages
+            | FilePurpose::Combine
+            | FilePurpose::AddImage
+            | FilePurpose::ReplaceImage { .. }
+            | FilePurpose::ReplacePageImage { .. }
+    ) {
         return dialog.add_filter("PDF", &["pdf"]);
     }
     let all: Vec<&str> = std::iter::once("pdf").chain(pdfcraft_engine::CONVERTIBLE).collect();
@@ -90,7 +116,15 @@ pub struct ReplaceDraft {
 impl FilePurpose {
     /// Insert and Replace edit the active document, at its selection.
     pub(crate) fn edits_active_document(self) -> bool {
-        matches!(self, Self::InsertPages | Self::ReplacePages | Self::TextFont { .. })
+        matches!(
+            self,
+            Self::InsertPages
+                | Self::ReplacePages
+                | Self::TextFont { .. }
+                | Self::AddImage
+                | Self::ReplaceImage { .. }
+                | Self::ReplacePageImage { .. }
+        )
     }
 }
 
@@ -493,6 +527,25 @@ impl PdfCraftApp {
                 }
                 self.redact_search.words = pdfcraft_engine::redact_word_list(&pdfcraft_engine::decode_text(&bytes)).join("\n");
                 self.redact_search.mode = crate::redact_ui::SearchMode::Words;
+            }
+            FilePurpose::AddImage => {
+                if let Some((name, bytes)) = files.into_iter().next() {
+                    self.add_image(name, bytes);
+                }
+            }
+            FilePurpose::ReplaceImage { page, index } => {
+                if let Some((name, bytes)) = files.into_iter().next() {
+                    self.apply_edit(Edit::ReplaceImage { page, index, name, bytes: std::sync::Arc::new(bytes) });
+                }
+            }
+            FilePurpose::ReplacePageImage { page, index } => {
+                if let Some((name, bytes)) = files.into_iter().next() {
+                    self.apply_edit(Edit::EditPageImage {
+                        page,
+                        index,
+                        change: pdfcraft_engine::ImageEdit::Replace { name, bytes: std::sync::Arc::new(bytes) },
+                    });
+                }
             }
         }
     }
