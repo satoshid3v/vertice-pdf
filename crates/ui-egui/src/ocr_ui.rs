@@ -124,8 +124,13 @@ pub(crate) fn body(ui: &mut egui::Ui, app: &mut PdfCraftApp, t: &Tokens) -> (boo
             .on_hover_text(tl!("Pictures on those pages are recognized too; words already in the page's text are not added again"));
     });
     if !available {
+        let msg = if cfg!(target_arch = "wasm32") {
+            tl!("Text recognition (OCR) requires local neural models and is available in the desktop version of Vértice PDF.")
+        } else {
+            tl!("Text recognition isn't installed: its model files are missing. Reinstall Vértice PDF, or set PDFCRAFT_MODELS to the folder that holds them.")
+        };
         ui.label(
-            egui::RichText::new(tl!("Text recognition isn't installed: its model files are missing. Reinstall PdfCraft, or set PDFCRAFT_MODELS to the folder that holds them."))
+            egui::RichText::new(msg)
                 .small()
                 .color(t.text_muted),
         );
