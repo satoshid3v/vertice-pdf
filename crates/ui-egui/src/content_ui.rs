@@ -70,11 +70,21 @@ pub struct TextDraft {
     pub focus: bool,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum Side {
+    Left,
+    Right,
+    Top,
+    Bottom,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum Grab {
     Move,
     /// Which corner: (left, top) in screen terms.
     Corner(bool, bool),
+    /// Which side edge: Left, Right, Top, Bottom.
+    Side(Side),
 }
 
 #[derive(Clone, Debug, Default, PartialEq)]
@@ -248,11 +258,21 @@ fn on_page(added: &[Added], page: usize) -> Vec<(usize, &Added)> {
     added.iter().filter(|a| a.page == page).enumerate().collect()
 }
 
-fn handles(r: Rect) -> [(Pos2, bool, bool); 4] {
-    [(r.left_top(), true, true), (r.right_top(), false, true), (r.left_bottom(), true, false), (r.right_bottom(), false, false)]
+fn handles(r: Rect) -> [(Pos2, Grab); 8] {
+    let c = r.center();
+    [
+        (r.left_top(), Grab::Corner(true, true)),
+        (r.right_top(), Grab::Corner(false, true)),
+        (r.left_bottom(), Grab::Corner(true, false)),
+        (r.right_bottom(), Grab::Corner(false, false)),
+        (egui::pos2(r.left(), c.y), Grab::Side(Side::Left)),
+        (egui::pos2(r.right(), c.y), Grab::Side(Side::Right)),
+        (egui::pos2(c.x, r.top()), Grab::Side(Side::Top)),
+        (egui::pos2(c.x, r.bottom()), Grab::Side(Side::Bottom)),
+    ]
 }
 
-/// The rect while moving or resizing (images keep their proportions).
+/// The rect while moving or resizing.
 fn dragged(r: Rect, grab: Grab, d: egui::Vec2, keep_aspect: bool) -> Rect {
     match grab {
         Grab::Move => r.translate(d),
@@ -275,6 +295,26 @@ fn dragged(r: Rect, grab: Grab, d: egui::Vec2, keep_aspect: bool) -> Rect {
                 out.max.y += dy;
             }
             Rect::from_two_pos(out.min, out.max)
+        }
+        Grab::Side(Side::Left) => {
+            let mut out = r;
+            out.min.x = (out.min.x + d.x).min(out.max.x - 5.0);
+            out
+        }
+        Grab::Side(Side::Right) => {
+            let mut out = r;
+            out.max.x = (out.max.x + d.x).max(out.min.x + 5.0);
+            out
+        }
+        Grab::Side(Side::Top) => {
+            let mut out = r;
+            out.min.y = (out.min.y + d.y).min(out.max.y - 5.0);
+            out
+        }
+        Grab::Side(Side::Bottom) => {
+            let mut out = r;
+            out.max.y = (out.max.y + d.y).max(out.min.y + 5.0);
+            out
         }
     }
 }
@@ -308,7 +348,7 @@ pub(crate) fn page_input(
                 && let Some((_, a)) = on_page(added, page).into_iter().find(|(i, _)| *i == si)
                 && (end - start).length() >= 1.0
             {
-                let keep = matches!(a.content, AddedContent::Image(_));
+                let keep = matches!(a.content, AddedContent::Image(_)) && matches!(grab, Grab::Corner(..));
                 let r = dragged(screen_rect(xf, info, page, a.content.rect()), grab, end - start, keep);
                 let (p0, p1) = (to_display(xf, info, page, r.left_bottom()), to_display(xf, info, page, r.right_top()));
                 let mut rect = [p0[0], p0[1], p1[0], p1[1]];
@@ -331,7 +371,7 @@ pub(crate) fn page_input(
         .filter(|s| s.0 == page)
         .and_then(|(_, si)| items.iter().find(|(i, _)| *i == si))
         .map(|(_, a)| screen_rect(xf, info, page, a.content.rect()));
-    let corner = selected_rect.and_then(|r| handles(r).into_iter().find(|(c, ..)| c.distance(p) <= 6.0));
+    let handle = selected_rect.and_then(|r| handles(r).into_iter().find(|(c, ..)| c.distance(p) <= 7.0));
     if adding_text && hit.is_none() {
         ui.ctx().set_cursor_icon(egui::CursorIcon::Text);
         if resp.clicked() {
@@ -362,15 +402,22 @@ pub(crate) fn page_input(
         }
         return consumed;
     }
-    if let Some((_, left, top)) = corner {
-        ui.ctx().set_cursor_icon(if left == top { egui::CursorIcon::ResizeNwSe } else { egui::CursorIcon::ResizeNeSw });
+    if let Some((_, grab)) = handle {
+        ui.ctx().set_cursor_icon(match grab {
+            Grab::Corner(left, top) => {
+                if left == top { egui::CursorIcon::ResizeNwSe } else { egui::CursorIcon::ResizeNeSw }
+            }
+            Grab::Side(Side::Left | Side::Right) => egui::CursorIcon::ResizeHorizontal,
+            Grab::Side(Side::Top | Side::Bottom) => egui::CursorIcon::ResizeVertical,
+            Grab::Move => egui::CursorIcon::Move,
+        });
     } else if hit.is_some() {
         ui.ctx().set_cursor_icon(egui::CursorIcon::Move);
     }
     if resp.drag_started() {
         let origin = ui.input(|i| i.pointer.press_origin()).unwrap_or(p);
-        if let Some((_, left, top)) = selected_rect.and_then(|r| handles(r).into_iter().find(|(c, ..)| c.distance(origin) <= 6.0)) {
-            cv.grab = Some((page, Grab::Corner(left, top), origin));
+        if let Some((_, grab)) = selected_rect.and_then(|r| handles(r).into_iter().find(|(c, ..)| c.distance(origin) <= 7.0)) {
+            cv.grab = Some((page, grab, origin));
             consumed = true;
         } else if let Some((i, _)) = items.iter().rev().find(|(_, a)| screen_rect(xf, info, page, a.content.rect()).expand(2.0).contains(origin)) {
             cv.selected = Some((page, *i));
@@ -397,7 +444,7 @@ pub(crate) fn page_input(
                 cv.selected = Some((page, i));
                 consumed = true;
             }
-            None if corner.is_none() => cv.selected = None,
+            None if handle.is_none() => cv.selected = None,
             None => consumed = true,
         }
     }
@@ -418,7 +465,8 @@ pub(crate) fn paint_page(ui: &egui::Ui, painter: &egui::Painter, xf: &PageXform,
             && let (Some((gp, g, start)), Some(p)) = (cv.grab, pointer)
             && gp == page
         {
-            r = dragged(r, g, p - start, matches!(a.content, AddedContent::Image(_)));
+            let keep = matches!(a.content, AddedContent::Image(_)) && matches!(g, Grab::Corner(..));
+            r = dragged(r, g, p - start, keep);
         }
         if selected {
             painter.rect_stroke(r.expand(1.0), CornerRadius::ZERO, Stroke::new(1.5, SELECT_BLUE), egui::StrokeKind::Outside);
@@ -764,6 +812,30 @@ pub(crate) fn image_panel(ui: &mut egui::Ui, t: &Tokens, img: &pdfcraft_engine::
             out = Some(ImageAction::Replace);
         }
     });
+    ui.add_space(6.0);
+    ui.label(egui::RichText::new(tl!("Dimensions")).small().color(t.text_muted));
+    let mut w = ((img.rect[2] - img.rect[0]).abs()).round();
+    let mut h = ((img.rect[3] - img.rect[1]).abs()).round();
+    let mut size_changed = false;
+    ui.horizontal(|ui| {
+        ui.label(tl!("Width:"));
+        let rw = ui.add(egui::DragValue::new(&mut w).range(10.0..=5000.0).speed(1.0).suffix(" pt"));
+        ui.add_space(8.0);
+        ui.label(tl!("Height:"));
+        let rh = ui.add(egui::DragValue::new(&mut h).range(10.0..=5000.0).speed(1.0).suffix(" pt"));
+        size_changed |= rw.drag_stopped() || (rw.changed() && !rw.dragged());
+        size_changed |= rh.drag_stopped() || (rh.changed() && !rh.dragged());
+    });
+    if size_changed && w >= 10.0 && h >= 10.0 {
+        let mut i = img.clone();
+        let cx = (i.rect[0] + i.rect[2]) / 2.0;
+        let cy = (i.rect[1] + i.rect[3]) / 2.0;
+        i.rect = [cx - w / 2.0, cy - h / 2.0, cx + w / 2.0, cy + h / 2.0];
+        if i.rect != img.rect {
+            out = Some(ImageAction::Update(AddedContent::Image(i)));
+        }
+    }
+    ui.add_space(6.0);
     ui.label(egui::RichText::new(tl!("Crop (% trimmed from each side)")).small().color(t.text_muted));
     let mut crop = img.crop.map(|v| (v * 100.0).round());
     let mut changed = false;
