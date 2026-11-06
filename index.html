@@ -2,6 +2,23 @@
 <!-- Desarrollado por Vertice Codeium · Inspirado en PdfCraft -->
 <html lang="es">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MKJBV52X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Telemetría de eventos para Vértice PDF
+      window.trackEvent = function(eventName, eventParams) {
+        if (typeof gtag === 'function') {
+          gtag('event', eventName, eventParams || {});
+        } else if (window.dataLayer) {
+          window.dataLayer.push(Object.assign({ event: eventName }, eventParams || {}));
+        }
+      };
+    </script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Vertice Codeium" />
@@ -30,28 +47,6 @@
     <meta name="twitter:image" content="brand-logo.svg" />
 
     <link rel="icon" type="image/svg+xml" href="brand-logo.svg" />
-
-    <!-- Google Analytics (GA4) -->
-    <!-- Reemplaza 'G-XXXXXXXXXX' con tu ID de medición de Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      // Configuración de GA4 (anonymize_ip por defecto para privacidad europea/global)
-      gtag('config', 'G-XXXXXXXXXX', {
-        'send_page_view': true,
-        'anonymize_ip': true
-      });
-
-      // Función de telemetría de eventos personalizada
-      window.trackEvent = function(eventName, eventParams) {
-        if (typeof gtag === 'function') {
-          gtag('event', eventName, eventParams || {});
-        }
-      };
-    </script>
 
     <!-- Datos Estructurados JSON-LD (Schema.org para Google Search & Rich Snippets) -->
     <script type="application/ld+json">
