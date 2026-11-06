@@ -37,16 +37,16 @@
     <meta property="og:title" content="Editor PDF Online Gratis y Seguro — Vértice PDF | 100% Privado" />
     <meta property="og:description" content="Abre y edita documentos PDF directamente en tu navegador con total privacidad. Cero telemetría, motor nativo en Rust WebAssembly y procesamiento local en tu dispositivo." />
     <meta property="og:url" content="https://verticepdf.verticecodeium.com/" />
-    <meta property="og:image" content="brand-logo.svg" />
+    <meta property="og:image" content="https://verticepdf.verticecodeium.com/brand-logo.svg" />
     <meta property="og:locale" content="es_ES" />
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Editor PDF Online Gratis y Seguro — Vértice PDF" />
     <meta name="twitter:description" content="Editor y visor de PDF en tu navegador. Sin registros, sin nube y sin trazabilidad. Abre y edita archivos PDF con rendimiento nativo." />
-    <meta name="twitter:image" content="brand-logo.svg" />
+    <meta name="twitter:image" content="https://verticepdf.verticecodeium.com/brand-logo.svg" />
 
-    <link rel="icon" type="image/svg+xml" href="brand-logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/brand-logo.svg" />
 
     <!-- Datos Estructurados JSON-LD (Schema.org para Google Search & Rich Snippets) -->
     <script type="application/ld+json">
@@ -120,10 +120,10 @@
 
     <!-- Cargador de WebAssembly con Descompresión Transparente -->
     <script type="module">
-      import init, * as bindings from './pdfcraft-web-60660ab31e82afb6.js';
+      import init, * as bindings from '/pdfcraft-web-60660ab31e82afb6.js';
 
       async function loadWasm() {
-        const resp = await fetch('./pdfcraft-web-60660ab31e82afb6_bg.wasm');
+        const resp = await fetch('/pdfcraft-web-60660ab31e82afb6_bg.wasm');
         const buffer = await resp.arrayBuffer();
         let bytes = new Uint8Array(buffer);
 
@@ -325,6 +325,75 @@
         background: rgba(255, 255, 255, 0.12);
         color: #ffffff;
         transform: translateY(-1px);
+      }
+
+      .btn-github-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: 9999px;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: #f1f5f9;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        text-decoration: none;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn-github-nav:hover {
+        background: rgba(255, 255, 255, 0.14);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-1px);
+      }
+      .gh-star-badge {
+        background: rgba(255, 255, 255, 0.12);
+        padding: 2px 7px;
+        border-radius: 9999px;
+        font-size: 11px;
+        color: #fbbf24;
+        font-weight: 600;
+      }
+
+      /* Banner de Confianza y Modo Avión */
+      .trust-banner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        max-width: 680px;
+        margin: 20px auto 0;
+        padding: 12px 18px;
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        border-radius: 14px;
+        font-size: 13px;
+        color: #e2e8f0;
+        text-align: left;
+        backdrop-filter: blur(12px);
+      }
+      .trust-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .trust-text {
+        flex: 1;
+        line-height: 1.45;
+      }
+      .trust-text strong {
+        color: #34d399;
+      }
+      .trust-link {
+        color: #38bdf8;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 12.5px;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+      }
+      .trust-link:hover {
+        color: #7dd3fc;
+        text-decoration: underline;
       }
 
       /* Hero Section */
@@ -728,13 +797,20 @@
         <div class="nav-wrapper">
           <header class="landing-nav">
             <a href="#" class="brand-group" onclick="location.reload(); return false;">
-              <img src="brand-logo.svg" alt="Logotipo Vértice PDF" class="brand-logo-img" />
+              <img src="/brand-logo.svg" alt="Logotipo Vértice PDF" class="brand-logo-img" />
               <span class="brand-title">Vértice PDF <span>Editor</span></span>
             </a>
             <div class="nav-actions">
-              <div class="badge-privacy">
+              <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener noreferrer" class="btn-github-nav" title="Código 100% abierto y auditable en GitHub">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+                <span>Código Auditable</span>
+                <span class="gh-star-badge">⭐ Star</span>
+              </a>
+              <div class="badge-privacy" title="Tus documentos nunca tocan ningún servidor. Abre la pestaña Network (F12) o desconecta el WiFi y verás 0 peticiones de red.">
                 <span class="pulse-dot"></span>
-                <span>100% Privado en tu RAM</span>
+                <span>Modo Local (0 Red)</span>
               </div>
               <button class="btn-ghost-nav" onclick="window.enterWorkspace();">
                 <span>Ir al Editor</span>
@@ -807,6 +883,17 @@
             <div class="chip">✒️ Firma Digital (E-Sign)</div>
             <div class="chip">📑 Organizar Páginas</div>
             <div class="chip">👁️ Visor HD Nativo</div>
+          </div>
+
+          <!-- Banner de Confianza / Modo Avión -->
+          <div class="trust-banner">
+            <span class="trust-icon">✈️</span>
+            <div class="trust-text">
+              <strong>Modo Avión Compatible:</strong> Todo el procesamiento corre dentro de tu navegador con WebAssembly. Puedes desconectar el WiFi tras cargar o inspeccionar la pestaña Red (F12): 0 llamadas a servidores externos.
+            </div>
+            <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener noreferrer" class="trust-link">
+              Auditar Código →
+            </a>
           </div>
         </section>
 
@@ -917,15 +1004,7 @@
         const particles = new THREE.Points(geometry, material);
         scene.add(particles);
 
-        // Parallax interactivo con el cursor del mouse
-        let mouseX = 0, mouseY = 0;
-        let targetX = 0, targetY = 0;
-
-        window.addEventListener("mousemove", (e) => {
-          mouseX = (e.clientX - window.innerWidth / 2) * 0.08;
-          mouseY = (e.clientY - window.innerHeight / 2) * 0.08;
-        }, { passive: true });
-
+        // Animación autónoma, suave y continua (sin reacción ni saltos por movimiento del mouse)
         window.addEventListener("resize", () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
@@ -937,13 +1016,11 @@
         function animate() {
           threeAnimId = requestAnimationFrame(animate);
           const delta = timer.getDelta();
+          const elapsed = timer.getElapsedTime();
 
-          targetX += (mouseX - targetX) * 0.04;
-          targetY += (mouseY - targetY) * 0.04;
-
-          particles.rotation.y += delta * 0.04;
-          particles.rotation.x = targetY * 0.002;
-          particles.rotation.y += targetX * 0.002;
+          // Flotación y rotación sutil a 60 FPS, completamente serena
+          particles.rotation.y += delta * 0.035;
+          particles.rotation.x = Math.sin(elapsed * 0.25) * 0.05;
 
           const pos = geometry.attributes.position.array;
           for (let i = 0; i < particleCount; i++) {
@@ -1065,37 +1142,36 @@
         });
       }
 
-      // Drag and Drop en el dropzone y en la ventana
+      // Drag and Drop universal en toda la pantalla (Global Window & Dropzone)
       const dropzone = document.getElementById("dropzone");
-      if (dropzone) {
-        ["dragenter", "dragover"].forEach(evt => {
-          dropzone.addEventListener(evt, (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            dropzone.classList.add("drag-over");
-          });
-        });
-        ["dragleave", "drop"].forEach(evt => {
-          dropzone.addEventListener(evt, (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            dropzone.classList.remove("drag-over");
-          });
-        });
-        dropzone.addEventListener("drop", (e) => {
-          if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-            handleFile(e.dataTransfer.files[0]);
-          }
-        });
-      }
+      let dragCounter = 0;
 
-      // Soporte para arrastrar archivo en cualquier parte de la landing
-      window.addEventListener("dragover", (e) => e.preventDefault());
+      window.addEventListener("dragenter", (e) => {
+        e.preventDefault();
+        dragCounter++;
+        if (dropzone) dropzone.classList.add("drag-over");
+      });
+
+      window.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        dragCounter--;
+        if (dragCounter <= 0) {
+          dragCounter = 0;
+          if (dropzone) dropzone.classList.remove("drag-over");
+        }
+      });
+
+      window.addEventListener("dragover", (e) => {
+        e.preventDefault();
+      });
+
       window.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dragCounter = 0;
+        if (dropzone) dropzone.classList.remove("drag-over");
         if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
           const file = e.dataTransfer.files[0];
           if (file.name.toLowerCase().endsWith(".pdf")) {
-            e.preventDefault();
             handleFile(file);
           }
         }
