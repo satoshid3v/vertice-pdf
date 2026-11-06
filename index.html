@@ -5,75 +5,65 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Vertice Codeium" />
-    <meta name="description" content="Editor y visor de PDF online gratis y 100% privado en tu navegador. Abre PDF al instante, edita textos e imágenes, resalta formularios y firma documentos sin registros ni subir archivos a la nube." />
-    <meta name="keywords" content="pdf, editor pdf, abrir pdf, visor pdf, leer pdf, editar pdf online gratis, vertice pdf, vertice codeium, firmar pdf, combinar pdf, convertir pdf, pdf privado, sin registro, lector pdf en linea, pdf viewer web, free pdf editor" />
+    
+    <!-- SEO de Alto Rendimiento para Posicionamiento en Google -->
+    <title>Editor PDF Online Gratis y Seguro — Vértice PDF | 100% Privado en tu Navegador</title>
+    <meta name="description" content="El mejor editor de PDF online gratuito y 100% privado. Abre y edita archivos PDF al instante, modifica texto e imágenes, firma documentos, organiza páginas y rellena formularios interactivos sin registros ni subir archivos a servidores." />
+    <meta name="keywords" content="editor pdf, editor de pdf, editar pdf, editor pdf online, abrir pdf, lector pdf, visor pdf, editar pdf gratis, vertice pdf, vertice codeium, firmar pdf, combinar pdf, convertir pdf, pdf privado, sin registro, lector pdf en linea, pdf viewer web, free pdf editor" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="theme-color" content="#2563eb" />
+    <meta name="theme-color" content="#07090e" />
+    <link rel="canonical" href="https://verticepdf.verticecodeium.com/" />
     
     <!-- Open Graph / Redes Sociales -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Vértice PDF" />
-    <meta property="og:title" content="Vértice PDF — Editor y Visor de PDF Online Gratis y Seguro" />
+    <meta property="og:title" content="Editor PDF Online Gratis y Seguro — Vértice PDF | 100% Privado" />
     <meta property="og:description" content="Abre y edita documentos PDF directamente en tu navegador con total privacidad. Cero telemetría, motor nativo en Rust WebAssembly y procesamiento local en tu dispositivo." />
-    <meta property="og:url" content="https://satoshid3v.github.io/vertice-pdf/" />
+    <meta property="og:url" content="https://verticepdf.verticecodeium.com/" />
     <meta property="og:image" content="brand-logo.svg" />
     <meta property="og:locale" content="es_ES" />
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Vértice PDF — Editor y Visor de PDF Online 100% Privado" />
+    <meta name="twitter:title" content="Editor PDF Online Gratis y Seguro — Vértice PDF" />
     <meta name="twitter:description" content="Editor y visor de PDF en tu navegador. Sin registros, sin nube y sin trazabilidad. Abre y edita archivos PDF con rendimiento nativo." />
     <meta name="twitter:image" content="brand-logo.svg" />
 
-    <link rel="canonical" href="https://satoshid3v.github.io/vertice-pdf/" />
-    <title>Vértice PDF — Editor y Visor de PDF Online Gratis | 100% Privado</title>
-    
-    
     <link rel="icon" type="image/svg+xml" href="brand-logo.svg" />
-    
-<script type="module">
-import init, * as bindings from './pdfcraft-web-60660ab31e82afb6.js';
 
-async function loadWasm() {
-  const resp = await fetch('./pdfcraft-web-60660ab31e82afb6_bg.wasm');
-  const buffer = await resp.arrayBuffer();
-  let bytes = new Uint8Array(buffer);
+    <!-- Google Analytics (GA4) -->
+    <!-- Reemplaza 'G-XXXXXXXXXX' con tu ID de medición de Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  // Si los bytes recibidos son Gzip (magic 1f 8b), descomprimir transparentemente
-  if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
-    if (typeof DecompressionStream !== 'undefined') {
-      const stream = new Response(bytes).body.pipeThrough(new DecompressionStream('gzip'));
-      const decompressedBuffer = await new Response(stream).arrayBuffer();
-      bytes = new Uint8Array(decompressedBuffer);
-    }
-  }
+      // Configuración de GA4 (anonymize_ip por defecto para privacidad europea/global)
+      gtag('config', 'G-XXXXXXXXXX', {
+        'send_page_view': true,
+        'anonymize_ip': true
+      });
 
-  return new Response(bytes, {
-    headers: { 'Content-Type': 'application/wasm' }
-  });
-}
+      // Función de telemetría de eventos personalizada
+      window.trackEvent = function(eventName, eventParams) {
+        if (typeof gtag === 'function') {
+          gtag('event', eventName, eventParams || {});
+        }
+      };
+    </script>
 
-try {
-  const wasmResponse = await loadWasm();
-  const wasm = await init({ module_or_path: wasmResponse });
-  window.wasmBindings = bindings;
-  dispatchEvent(new CustomEvent("TrunkApplicationStarted", { detail: { wasm } }));
-} catch (err) {
-  console.error("Error al inicializar WebAssembly:", err);
-}
-</script>
-
-    <!-- Datos Estructurados JSON-LD (Schema.org para Google Search) -->
+    <!-- Datos Estructurados JSON-LD (Schema.org para Google Search & Rich Snippets) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "WebApplication",
-          "@id": "https://satoshid3v.github.io/vertice-pdf/#webapp",
+          "@id": "https://verticepdf.verticecodeium.com/#webapp",
           "name": "Vértice PDF",
-          "url": "https://satoshid3v.github.io/vertice-pdf/",
-          "description": "Suite de edición, lectura, firma y procesamiento de archivos PDF de alto rendimiento, desarrollada en Rust y WebAssembly por Vertice Codeium. Ejecución 100% local en el navegador sin telemetría ni servidores remotos.",
+          "url": "https://verticepdf.verticecodeium.com/",
+          "description": "El editor y visor de PDF online más rápido y privado. Desarrollado en Rust y WebAssembly por Vertice Codeium. Ejecución 100% en tu memoria RAM sin servidores.",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "All",
           "offers": {
@@ -86,8 +76,9 @@ try {
             "name": "Vertice Codeium"
           },
           "featureList": [
-            "Apertura instantánea de archivos PDF en memoria local",
-            "Edición de texto, anotaciones y párrafos",
+            "Editor de PDF online gratuito",
+            "Apertura instantánea de documentos PDF en memoria RAM",
+            "Edición de texto, párrafos y fuentes",
             "Inserción y redimensionamiento de imágenes con 8 puntos de control",
             "Relleno y resaltado de formularios interactivos",
             "Firma electrónica (E-Sign) y sellos",
@@ -97,30 +88,30 @@ try {
         },
         {
           "@type": "FAQPage",
-          "@id": "https://satoshid3v.github.io/vertice-pdf/#faq",
+          "@id": "https://verticepdf.verticecodeium.com/#faq",
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "¿Cómo abrir y editar un PDF online con Vértice PDF?",
+              "name": "¿Cómo usar el editor de PDF online gratis?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Simplemente pulsa el botón 'Abrir PDF' o arrastra cualquier archivo PDF al área de trabajo. El documento se procesará de inmediato en la memoria RAM de tu navegador, permitiéndote editar texto, imágenes, rellenar formularios y firmar sin esperas."
+                "text": "Simplemente haz clic en el botón 'Abrir PDF' o arrastra tu archivo a la pantalla. El documento se abrirá de inmediato en el editor sin esperas y podrás modificar texto, agregar firmas y rellenar formularios."
               }
             },
             {
               "@type": "Question",
-              "name": "¿Mis documentos PDF se suben a algún servidor o a la nube?",
+              "name": "¿Mis documentos PDF se suben a algún servidor en Internet?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. Vértice PDF opera bajo una estricta política de privacidad de cero telemetría. Todo el código corre localmente en tu dispositivo mediante WebAssembly compilado desde Rust. Ningún byte de tus documentos sale jamás de tu equipo."
+                "text": "No. Vértice PDF funciona con arquitectura Zero-Knowledge y cero telemetría. Todo el motor corre de forma local en tu navegador con WebAssembly. Ningún archivo sale de tu dispositivo."
               }
             },
             {
               "@type": "Question",
-              "name": "¿Vértice PDF es completamente gratis?",
+              "name": "¿Tiene algún costo o límite de páginas?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Sí. Vértice PDF es una herramienta abierta y gratuita, sin límites de páginas, sin marcas de agua forzadas y sin necesidad de crear cuentas ni pagar suscripciones."
+                "text": "Es 100% libre y gratuito, sin suscripciones, sin límites de tamaño y sin marcas de agua."
               }
             }
           ]
@@ -129,19 +120,70 @@ try {
     }
     </script>
 
+    <!-- Three.js para Fondo Ambiental Interactivo 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Cargador de WebAssembly con Descompresión Transparente -->
+    <script type="module">
+      import init, * as bindings from './pdfcraft-web-60660ab31e82afb6.js';
+
+      async function loadWasm() {
+        const resp = await fetch('./pdfcraft-web-60660ab31e82afb6_bg.wasm');
+        const buffer = await resp.arrayBuffer();
+        let bytes = new Uint8Array(buffer);
+
+        // Si los bytes recibidos son Gzip (magic 1f 8b), descomprimir con DecompressionStream
+        if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
+          if (typeof DecompressionStream !== 'undefined') {
+            const stream = new Response(bytes).body.pipeThrough(new DecompressionStream('gzip'));
+            const decompressedBuffer = await new Response(stream).arrayBuffer();
+            bytes = new Uint8Array(decompressedBuffer);
+          }
+        }
+
+        return new Response(bytes, {
+          headers: { 'Content-Type': 'application/wasm' }
+        });
+      }
+
+      try {
+        const wasmResponse = await loadWasm();
+        const wasm = await init({ module_or_path: wasmResponse });
+        window.wasmBindings = bindings;
+        dispatchEvent(new CustomEvent("TrunkApplicationStarted", { detail: { wasm } }));
+      } catch (err) {
+        console.error("Error al inicializar WebAssembly:", err);
+      }
+    </script>
+
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --color-primary: #0071e3;
+        --color-primary-hover: #0077ed;
+        --color-primary-glow: rgba(0, 113, 227, 0.45);
+        --color-accent-cyan: #2997ff;
+        --color-bg-deep: #07090e;
+        --color-surface-card: rgba(15, 23, 42, 0.65);
+        --color-surface-border: rgba(255, 255, 255, 0.08);
+        --color-surface-hover: rgba(30, 41, 59, 0.85);
+        --color-text-title: #ffffff;
+        --color-text-body: #94a3b8;
+        --color-text-muted: #64748b;
+      }
+
       html, body {
         height: 100%;
         width: 100%;
         overflow-x: hidden;
-        background: #f8fafc;
-        color: #0f172a;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--color-bg-deep);
+        color: var(--color-text-title);
+        font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
       }
-      
-      /* Canvas del visor WASM */
+
+      /* Canvas de egui / WebAssembly (Oculto inicialmente hasta abrir un PDF o entrar al editor) */
       #pdfcraft {
         position: fixed;
         inset: 0;
@@ -153,16 +195,16 @@ try {
         background: #f1f1f3;
       }
 
-      /* Landing Page Overlay */
+      /* Contenedor Principal de la Landing Page */
       #landing-view {
         position: fixed;
         inset: 0;
         z-index: 100;
         overflow-y: auto;
-        background: #ffffff;
+        background: radial-gradient(circle at 50% -10%, rgba(0, 113, 227, 0.18), transparent 70%), var(--color-bg-deep);
         display: flex;
         flex-direction: column;
-        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+        transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s ease;
       }
       #landing-view.hidden {
         opacity: 0;
@@ -170,19 +212,49 @@ try {
         pointer-events: none;
       }
 
-      /* Barra de navegación superior */
-      .landing-nav {
+      /* Canvas 3D de Three.js para Efecto Ambiental */
+      #three-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.65;
+      }
+
+      /* Contenido superpuesto sobre Three.js */
+      .landing-content {
+        position: relative;
+        z-index: 2;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px 32px;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid #e2e8f0;
+        flex-direction: column;
+        min-height: 100%;
+      }
+
+      /* Navbar Flotante Estilo Apple Dynamic Island */
+      .nav-wrapper {
         position: sticky;
         top: 0;
         z-index: 50;
+        padding: 16px 24px;
+        display: flex;
+        justify-content: center;
+      }
+      .landing-nav {
+        width: 100%;
+        max-width: 980px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 18px;
+        background: rgba(15, 23, 42, 0.72);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 9999px;
+        box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.4);
       }
       .brand-group {
         display: flex;
@@ -192,58 +264,78 @@ try {
         color: inherit;
       }
       .brand-logo-img {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         border-radius: 8px;
+        filter: drop-shadow(0 2px 8px rgba(0, 113, 227, 0.4));
       }
       .brand-title {
-        font-size: 19px;
+        font-size: 18px;
         font-weight: 700;
         letter-spacing: -0.02em;
-        color: #0f172a;
+        color: #ffffff;
       }
+      .brand-title span {
+        color: var(--color-accent-cyan);
+        font-weight: 400;
+        font-size: 14px;
+        margin-left: 4px;
+      }
+
       .nav-actions {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
       }
       .badge-privacy {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 7px;
         padding: 5px 12px;
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
+        background: rgba(41, 151, 255, 0.1);
+        border: 1px solid rgba(41, 151, 255, 0.25);
         border-radius: 9999px;
         font-size: 12px;
-        font-weight: 600;
-        color: #1d4ed8;
-      }
-      .badge-privacy svg {
-        width: 14px;
-        height: 14px;
-      }
-      .btn-ghost {
-        padding: 7px 14px;
-        border-radius: 8px;
-        font-size: 13.5px;
         font-weight: 500;
-        color: #475569;
-        text-decoration: none;
-        background: transparent;
-        border: 1px solid #cbd5e1;
-        cursor: pointer;
-        transition: all 0.2s ease;
+        color: #70baff;
       }
-      .btn-ghost:hover {
-        background: #f1f5f9;
-        color: #0f172a;
+      .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background: #10b981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #10b981;
+        animation: pulse 2s infinite ease-in-out;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+      }
+
+      .btn-ghost-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 16px;
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #f1f5f9;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn-ghost-nav:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        transform: translateY(-1px);
       }
 
       /* Hero Section */
       .hero-section {
-        max-width: 960px;
-        margin: 48px auto 32px;
+        max-width: 900px;
+        margin: 36px auto 20px;
         padding: 0 24px;
         text-align: center;
         display: flex;
@@ -251,115 +343,190 @@ try {
         align-items: center;
       }
       .hero-eyebrow {
-        font-size: 12px;
-        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: #2563eb;
-        background: #eff6ff;
-        padding: 5px 12px;
+        color: var(--color-accent-cyan);
+        background: rgba(0, 113, 227, 0.12);
+        border: 1px solid rgba(41, 151, 255, 0.25);
+        padding: 6px 14px;
         border-radius: 9999px;
-        margin-bottom: 20px;
-        display: inline-block;
-      }
-      .hero-title {
-        font-size: 46px;
-        font-weight: 800;
-        line-height: 1.15;
-        letter-spacing: -0.03em;
-        color: #0f172a;
-        margin-bottom: 18px;
-      }
-      .hero-title span {
-        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .hero-description {
-        font-size: 18px;
-        line-height: 1.55;
-        color: #475569;
-        max-width: 720px;
-        margin-bottom: 36px;
+        margin-bottom: 24px;
+        backdrop-filter: blur(8px);
       }
 
-      /* Caja de Apertura Interactiva (Dropzone) */
+      .hero-title {
+        font-size: 54px;
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.038em;
+        color: #ffffff;
+        margin-bottom: 18px;
+        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      }
+      .hero-title .gradient-text {
+        background: linear-gradient(135deg, #ffffff 0%, #2997ff 60%, #0071e3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: block;
+        margin-top: 4px;
+      }
+
+      .hero-description {
+        font-size: 18px;
+        line-height: 1.5;
+        color: var(--color-text-body);
+        max-width: 660px;
+        margin-bottom: 38px;
+        font-weight: 400;
+      }
+
+      /* Tarjeta de Acción / Dropzone Interactiva Rediseñada */
+      .drop-card-container {
+        width: 100%;
+        max-width: 580px;
+        position: relative;
+        margin-bottom: 24px;
+      }
+      
       .dropzone-card {
         width: 100%;
-        max-width: 640px;
-        background: #ffffff;
-        border: 2px dashed #93c5fd;
-        border-radius: 20px;
-        padding: 44px 28px;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 28px;
+        padding: 40px 28px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 20px 35px -10px rgba(37, 99, 235, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
-        transition: all 0.25s ease;
-        cursor: pointer;
         position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       }
+
+      /* Glow sutil en el borde de la tarjeta */
+      .dropzone-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 28px;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(41, 151, 255, 0.35), transparent 60%, rgba(0, 113, 227, 0.3));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
       .dropzone-card:hover, .dropzone-card.drag-over {
-        border-color: #2563eb;
-        background: #f0f7ff;
-        transform: translateY(-2px);
-        box-shadow: 0 24px 45px -10px rgba(37, 99, 235, 0.16);
+        transform: translateY(-3px) scale(1.01);
+        background: rgba(22, 33, 58, 0.85);
+        border-color: rgba(41, 151, 255, 0.4);
+        box-shadow: 0 32px 64px -12px rgba(0, 113, 227, 0.25), 0 0 30px rgba(0, 113, 227, 0.15);
       }
+      .dropzone-card.drag-over {
+        border-color: var(--color-accent-cyan);
+        background: rgba(0, 113, 227, 0.15);
+      }
+
+      .icon-doc-floating {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(41, 151, 255, 0.15), rgba(0, 113, 227, 0.3));
+        border: 1px solid rgba(41, 151, 255, 0.3);
+        border-radius: 18px;
+        box-shadow: 0 12px 24px -4px rgba(0, 113, 227, 0.3);
+        color: #ffffff;
+        transition: transform 0.3s ease;
+      }
+      .dropzone-card:hover .icon-doc-floating {
+        transform: translateY(-4px) scale(1.05);
+      }
+
       .btn-open-pdf {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 14px 34px;
-        background: #2563eb;
+        padding: 15px 38px;
+        background: var(--color-primary);
         color: #ffffff;
         font-size: 17px;
         font-weight: 600;
-        border-radius: 12px;
+        border-radius: 9999px;
         border: none;
         cursor: pointer;
-        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-        transition: all 0.2s ease;
+        box-shadow: 0 10px 25px -4px var(--color-primary-glow), 0 2px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         margin-bottom: 12px;
       }
       .btn-open-pdf:hover {
-        background: #1d4ed8;
-        transform: scale(1.02);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
-      }
-      .dropzone-subtitle {
-        font-size: 14px;
-        color: #64748b;
-        font-weight: 500;
-      }
-      .dropzone-note {
-        font-size: 11.5px;
-        color: #94a3b8;
-        margin-top: 14px;
+        background: var(--color-primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px -4px var(--color-primary-glow), 0 4px 10px rgba(0, 0, 0, 0.3);
       }
 
-      /* Badges Rápidos */
+      .dropzone-subtitle {
+        font-size: 14.5px;
+        color: var(--color-text-body);
+        font-weight: 400;
+        margin-bottom: 14px;
+      }
+
+      .drop-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 12px;
+        color: var(--color-text-muted);
+      }
+      .drop-meta-row span {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Chips de Herramientas Rediseñados */
       .feature-chips {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
-        margin-top: 28px;
+        margin-top: 18px;
         max-width: 680px;
       }
       .chip {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        padding: 6px 14px;
-        background: #f1f5f9;
+        gap: 7px;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 9999px;
         font-size: 13px;
         font-weight: 500;
-        color: #334155;
+        color: #e2e8f0;
+        backdrop-filter: blur(12px);
+        transition: all 0.2s ease;
+      }
+      .chip:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(41, 151, 255, 0.3);
+        transform: translateY(-1px);
       }
 
-      /* Features Grid */
+      /* Bento Grid de Características (Estilo Apple) */
       .features-section {
         max-width: 1040px;
         margin: 64px auto 32px;
@@ -367,59 +534,66 @@ try {
       }
       .section-heading {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 44px;
       }
       .section-heading h2 {
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 700;
-        letter-spacing: -0.02em;
-        margin-bottom: 8px;
+        letter-spacing: -0.025em;
+        margin-bottom: 10px;
+        color: #ffffff;
       }
       .section-heading p {
-        font-size: 15px;
-        color: #64748b;
+        font-size: 16px;
+        color: var(--color-text-body);
       }
+
       .features-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        gap: 22px;
       }
       .feature-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 28px 24px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: rgba(15, 23, 42, 0.55);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        padding: 32px 28px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       .feature-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.06);
+        transform: translateY(-4px);
+        border-color: rgba(41, 151, 255, 0.35);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
       }
       .card-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        background: #eff6ff;
-        color: #2563eb;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: rgba(0, 113, 227, 0.15);
+        border: 1px solid rgba(41, 151, 255, 0.25);
+        color: var(--color-accent-cyan);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        margin-bottom: 16px;
+        font-size: 22px;
+        margin-bottom: 20px;
       }
       .feature-card h3 {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 600;
-        margin-bottom: 8px;
-        color: #0f172a;
+        margin-bottom: 10px;
+        color: #ffffff;
+        letter-spacing: -0.01em;
       }
       .feature-card p {
-        font-size: 14px;
-        line-height: 1.5;
-        color: #64748b;
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: var(--color-text-body);
       }
 
-      /* FAQ Section */
+      /* Sección FAQ */
       .faq-section {
         max-width: 820px;
         margin: 56px auto 64px;
@@ -431,35 +605,35 @@ try {
         gap: 16px;
       }
       .faq-item {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 20px 22px;
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 24px 26px;
       }
       .faq-item h3 {
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 600;
-        color: #0f172a;
+        color: #ffffff;
         margin-bottom: 8px;
       }
       .faq-item p {
-        font-size: 14px;
+        font-size: 14.5px;
         line-height: 1.55;
-        color: #475569;
+        color: var(--color-text-body);
       }
 
       /* Footer de la Landing */
       .landing-footer {
-        padding: 28px 24px;
-        border-top: 1px solid #e2e8f0;
+        padding: 32px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         text-align: center;
-        font-size: 13px;
-        color: #64748b;
-        background: #f8fafc;
+        font-size: 13.5px;
+        color: var(--color-text-muted);
+        background: rgba(7, 9, 14, 0.95);
         margin-top: auto;
       }
       .landing-footer a {
-        color: #2563eb;
+        color: var(--color-accent-cyan);
         text-decoration: none;
         font-weight: 500;
       }
@@ -470,20 +644,21 @@ try {
       /* Micro Loading Indicator */
       #micro-loader {
         position: fixed;
-        top: 18px;
-        right: 18px;
+        top: 20px;
+        right: 20px;
         z-index: 10001;
         display: none;
         align-items: center;
         gap: 10px;
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(8px);
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: blur(12px);
         color: #ffffff;
-        padding: 8px 16px;
+        padding: 9px 18px;
         border-radius: 9999px;
         font-size: 13px;
         font-weight: 500;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       .loader-spinner {
         width: 14px;
@@ -503,23 +678,23 @@ try {
         bottom: 8px;
         right: 14px;
         font-size: 11px;
-        color: #475569;
+        color: #94a3b8;
         z-index: 50;
         pointer-events: auto;
         user-select: none;
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(15, 23, 42, 0.82);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        padding: 3px 12px;
+        padding: 4px 14px;
         border-radius: 9999px;
-        border: 1px solid rgba(203, 213, 225, 0.6);
+        border: 1px solid rgba(51, 65, 85, 0.6);
         display: flex;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
       .btn-show-landing {
-        color: #2563eb;
+        color: var(--color-accent-cyan);
         cursor: pointer;
         font-weight: 600;
         background: none;
@@ -530,36 +705,14 @@ try {
         text-decoration: underline;
       }
 
-      /* Modo Oscuro */
-      @media (prefers-color-scheme: dark) {
-        html, body { background: #0f172a; color: #f8fafc; }
-        #landing-view { background: #0b1120; }
-        .landing-nav { background: rgba(11, 17, 32, 0.85); border-color: #1e293b; }
-        .brand-title { color: #f8fafc; }
-        .hero-title { color: #f8fafc; }
-        .hero-description { color: #94a3b8; }
-        .dropzone-card { background: #111827; border-color: #1e3a8a; }
-        .dropzone-card:hover, .dropzone-card.drag-over { background: #172554; border-color: #3b82f6; }
-        .dropzone-subtitle { color: #94a3b8; }
-        .feature-card { background: #111827; border-color: #1e293b; }
-        .feature-card h3 { color: #f8fafc; }
-        .card-icon { background: #1e293b; }
-        .chip { background: #1e293b; color: #cbd5e1; }
-        .faq-item { background: #111827; border-color: #1e293b; }
-        .faq-item h3 { color: #f8fafc; }
-        .faq-item p { color: #94a3b8; }
-        .landing-footer { background: #0b1120; border-color: #1e293b; color: #64748b; }
-        .brand-footer-dock { background: rgba(15, 23, 42, 0.8); border-color: #334155; color: #94a3b8; }
-      }
-
       @media (max-width: 640px) {
-        .landing-nav { padding: 12px 18px; }
-        .hero-title { font-size: 32px; }
+        .landing-nav { padding: 10px 14px; }
+        .hero-title { font-size: 36px; }
         .hero-description { font-size: 15px; }
-        .dropzone-card { padding: 32px 16px; }
+        .dropzone-card { padding: 32px 20px; }
       }
     </style>
-  <link rel="modulepreload" href="./pdfcraft-web-60660ab31e82afb6.js" crossorigin="anonymous"><link rel="preload" href="./pdfcraft-web-60660ab31e82afb6_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
+  </head>
   <body>
     <!-- Micro Loader flotante para operaciones en background -->
     <div id="micro-loader">
@@ -572,104 +725,147 @@ try {
 
     <!-- Landing Page Semántica e Indexable por Googlebot -->
     <main id="landing-view">
-      <header class="landing-nav">
-        <a href="#" class="brand-group" onclick="location.reload(); return false;">
-          <img src="brand-logo.svg" alt="Logotipo Vértice PDF" class="brand-logo-img" />
-          <span class="brand-title">Vértice PDF</span>
-        </a>
-        <div class="nav-actions">
-          <div class="badge-privacy">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      <!-- Canvas 3D de Three.js (Efecto Ambiental de Partículas y Profundidad) -->
+      <canvas id="three-canvas"></canvas>
+
+      <div class="landing-content">
+        <!-- Barra de Navegación Flotante Estilo Apple -->
+        <div class="nav-wrapper">
+          <header class="landing-nav">
+            <a href="#" class="brand-group" onclick="location.reload(); return false;">
+              <img src="brand-logo.svg" alt="Logotipo Vértice PDF" class="brand-logo-img" />
+              <span class="brand-title">Vértice PDF <span>Editor</span></span>
+            </a>
+            <div class="nav-actions">
+              <div class="badge-privacy">
+                <span class="pulse-dot"></span>
+                <span>100% Privado en tu RAM</span>
+              </div>
+              <button class="btn-ghost-nav" onclick="window.enterWorkspace();">
+                <span>Ir al Editor</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14m-7-7 7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          </header>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+          <div class="hero-eyebrow">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
-            <span>100% Privado</span>
+            Editor de PDF Profesional • Cero Telemetría • 100% Gratis
           </div>
-          <button class="btn-ghost" onclick="window.enterWorkspace();">Ir al Editor →</button>
-        </div>
-      </header>
+          
+          <h1 class="hero-title">
+            Editor de PDF Online
+            <span class="gradient-text">Rápido, Libre y 100% Privado</span>
+          </h1>
 
-      <section class="hero-section">
-        <div class="hero-eyebrow">⚡ Suite PDF de Alto Rendimiento • Cero Telemetría</div>
-        <h1 class="hero-title">Editor y Visor de PDF <span>100% Privado</span> en tu Navegador</h1>
-        <p class="hero-description">
-          Abre, visualiza, edita texto e imágenes, firma documentos y resalta formularios interactivos con fidelidad milimétrica. Sin suscripciones, sin registros y sin enviar tus documentos a ningún servidor.
-        </p>
+          <p class="hero-description">
+            Abre, visualiza, edita texto e imágenes, firma documentos y resalta formularios interactivos con fidelidad milimétrica. Sin suscripciones, sin registros y sin enviar tus documentos a ningún servidor.
+          </p>
 
-        <!-- Dropzone interactivo con botón "Abrir PDF" -->
-        <div class="dropzone-card" id="dropzone">
-          <input type="file" id="file-input" accept=".pdf,application/pdf" style="display:none;" />
-          <button class="btn-open-pdf" onclick="document.getElementById('file-input').click();">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
-              <path d="M12 10v6m-3-3 3-3 3 3"/>
-            </svg>
-            Abrir PDF
-          </button>
-          <p class="dropzone-subtitle">o arrastra y suelta tu archivo PDF aquí</p>
-          <span class="dropzone-note">Tus archivos se procesan 100% en tu memoria RAM. Cero almacenamiento en la nube.</span>
-        </div>
+          <!-- Tarjeta Interactiva de Apertura (Dropzone Rediseñada con Glassmorphism) -->
+          <div class="drop-card-container">
+            <div class="dropzone-card" id="dropzone">
+              <input type="file" id="file-input" accept=".pdf,application/pdf" style="display:none;" />
+              
+              <div class="icon-doc-floating">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
 
-        <div class="feature-chips">
-          <div class="chip">📄 Visor HD</div>
-          <div class="chip">✏️ Editor de Texto</div>
-          <div class="chip">🖼️ Imágenes con 8 Puntos</div>
-          <div class="chip">📝 Formularios Interactivos</div>
-          <div class="chip">✒️ Firma Digital</div>
-          <div class="chip">📑 Organizar Páginas</div>
-          <div class="chip">🔒 Cero Rastreo</div>
-        </div>
-      </section>
+              <button class="btn-open-pdf" onclick="document.getElementById('file-input').click();">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
+                  <path d="M12 10v6m-3-3 3-3 3 3"/>
+                </svg>
+                Abrir PDF
+              </button>
 
-      <!-- Características Principales -->
-      <section class="features-section">
-        <div class="section-heading">
-          <h2>¿Por qué elegir Vértice PDF?</h2>
-          <p>Potencia nativa combinada con respeto estricto a tu privacidad.</p>
-        </div>
-        <div class="features-grid">
-          <article class="feature-card">
-            <div class="card-icon">⚡</div>
-            <h3>Rendimiento Nativo en Rust</h3>
-            <p>Compilado directamente a WebAssembly para procesamiento y renderizado sin latencia. Abre y navega documentos de cientos de páginas con fluidez instantánea.</p>
-          </article>
-          <article class="feature-card">
-            <div class="card-icon">🔒</div>
-            <h3>Privacidad Absoluta (Zero-Knowledge)</h3>
-            <p>Cero telemetría y sin servidores remotos. Toda la manipulación, lectura y conversión de archivos ocurre estrictamente en el hardware de tu dispositivo.</p>
-          </article>
-          <article class="feature-card">
-            <div class="card-icon">✍️</div>
-            <h3>Herramientas Profesionales</h3>
-            <p>Edita párrafos de texto, ajusta imágenes con control de 8 puntos, resalta campos de formularios, añade sellos y firmas electrónicas con precisión tipográfica.</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- Preguntas Frecuentes (FAQ Semántico para Google) -->
-      <section class="faq-section">
-        <div class="section-heading">
-          <h2>Preguntas Frecuentes</h2>
-          <p>Todo lo que necesitas saber sobre Vértice PDF.</p>
-        </div>
-        <div class="faq-list">
-          <div class="faq-item">
-            <h3>¿Cómo abrir y editar un PDF online con Vértice PDF?</h3>
-            <p>Haz clic en el botón superior <strong>"Abrir PDF"</strong> o arrastra cualquier archivo PDF directamente a la pantalla. El documento se cargará al instante en el visor interactivo sin necesidad de instalar programas adicionales.</p>
+              <p class="dropzone-subtitle">o arrastra y suelta tu archivo PDF aquí</p>
+              
+              <div class="drop-meta-row">
+                <span>🛡️ Memoria RAM Local</span>
+                <span>•</span>
+                <span>⚡ Hasta 100MB por archivo</span>
+                <span>•</span>
+                <span>🔒 Cero Nube</span>
+              </div>
+            </div>
           </div>
-          <div class="faq-item">
-            <h3>¿Mis archivos se suben a Internet?</h3>
-            <p>Absolutamente no. A diferencia de otros convertidores o editores en línea, Vértice PDF ejecuta todo su motor internamente en tu navegador. Tus documentos confidenciales nunca tocan un servidor externo.</p>
-          </div>
-          <div class="faq-item">
-            <h3>¿Tiene algún costo o límite de uso?</h3>
-            <p>No. Vértice PDF es completamente gratuito, sin suscripciones, sin necesidad de registro y sin marcas de agua forzadas.</p>
-          </div>
-        </div>
-      </section>
 
-      <footer class="landing-footer">
-        <p>Desarrollado por <strong>Vertice Codeium</strong> • Inspirado en <strong>PdfCraft</strong> • <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener">Código Abierto en GitHub</a></p>
-      </footer>
+          <!-- Chips de Herramientas -->
+          <div class="feature-chips">
+            <div class="chip">✏️ Editar Texto</div>
+            <div class="chip">🖼️ Imágenes con 8 Puntos</div>
+            <div class="chip">📝 Formularios Interactivos</div>
+            <div class="chip">✒️ Firma Digital (E-Sign)</div>
+            <div class="chip">📑 Organizar Páginas</div>
+            <div class="chip">👁️ Visor HD Nativo</div>
+          </div>
+        </section>
+
+        <!-- Características Principales (Bento Grid) -->
+        <section class="features-section">
+          <div class="section-heading">
+            <h2>Potencia Profesional sin Concesiones</h2>
+            <p>Diseñado para ofrecer máxima velocidad y seguridad absoluta en cada operación.</p>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card">
+              <div class="card-icon">⚡</div>
+              <h3>Rendimiento Nativo en Rust</h3>
+              <p>Compilado directamente a WebAssembly para procesamiento y renderizado sin latencia. Abre y navega documentos de cientos de páginas con fluidez instantánea a 60 FPS.</p>
+            </article>
+            <article class="feature-card">
+              <div class="card-icon">🔒</div>
+              <h3>Privacidad Absoluta (Zero-Knowledge)</h3>
+              <p>Cero telemetría y sin servidores remotos. Toda la manipulación, lectura y conversión de archivos ocurre estrictamente en el hardware de tu dispositivo.</p>
+            </article>
+            <article class="feature-card">
+              <div class="card-icon">✍️</div>
+              <h3>Herramientas Profesionales</h3>
+              <p>Edita párrafos de texto, ajusta imágenes con control de 8 puntos, resalta campos de formularios, añade sellos y firmas electrónicas con precisión tipográfica.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Preguntas Frecuentes (FAQ Semántico para Google Search) -->
+        <section class="faq-section">
+          <div class="section-heading">
+            <h2>Preguntas Frecuentes</h2>
+            <p>Todo lo que necesitas saber sobre Vértice PDF.</p>
+          </div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <h3>¿Cómo abrir y editar un PDF online con Vértice PDF?</h3>
+              <p>Haz clic en el botón superior <strong>"Abrir PDF"</strong> o arrastra cualquier archivo PDF directamente a la pantalla. El documento se cargará al instante en el visor interactivo sin necesidad de instalar programas adicionales.</p>
+            </div>
+            <div class="faq-item">
+              <h3>¿Mis archivos se suben a Internet?</h3>
+              <p>Absolutamente no. A diferencia de otros convertidores o editores en línea, Vértice PDF ejecuta todo su motor internamente en tu navegador. Tus documentos confidenciales nunca tocan un servidor externo.</p>
+            </div>
+            <div class="faq-item">
+              <h3>¿Tiene algún costo o límite de uso?</h3>
+              <p>No. Vértice PDF es completamente gratuito, sin suscripciones, sin necesidad de registro y sin marcas de agua forzadas.</p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="landing-footer">
+          <p>Desarrollado por <strong>Vertice Codeium</strong> • Inspirado en <strong>PdfCraft</strong> • <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener">Código Abierto en GitHub</a></p>
+        </footer>
+      </div>
     </main>
 
     <!-- Dock inferior discreto para el lienzo de trabajo -->
@@ -681,6 +877,107 @@ try {
       <button class="btn-show-landing" onclick="window.showLanding();">Inicio / Info</button>
     </div>
 
+    <!-- Script de Animación 3D Ambiental con Three.js -->
+    <script>
+      let threeAnimId = null;
+      (function initThreeBackground() {
+        const canvas = document.getElementById("three-canvas");
+        if (!canvas || typeof THREE === "undefined") return;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 240;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Nube de partículas y constelación
+        const particleCount = 140;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const velocities = [];
+
+        for (let i = 0; i < particleCount; i++) {
+          positions[i * 3] = (Math.random() - 0.5) * 450;
+          positions[i * 3 + 1] = (Math.random() - 0.5) * 350;
+          positions[i * 3 + 2] = (Math.random() - 0.5) * 200;
+          velocities.push({
+            x: (Math.random() - 0.5) * 0.25,
+            y: (Math.random() - 0.5) * 0.25,
+            z: (Math.random() - 0.5) * 0.15
+          });
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const material = new THREE.PointsMaterial({
+          color: 0x2997ff,
+          size: 3.5,
+          transparent: true,
+          opacity: 0.75,
+          blending: THREE.AdditiveBlending
+        });
+
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        // Parallax interactivo con el cursor del mouse
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        window.addEventListener("mousemove", (e) => {
+          mouseX = (e.clientX - window.innerWidth / 2) * 0.08;
+          mouseY = (e.clientY - window.innerHeight / 2) * 0.08;
+        }, { passive: true });
+
+        window.addEventListener("resize", () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        const timer = new THREE.Clock();
+
+        function animate() {
+          threeAnimId = requestAnimationFrame(animate);
+          const delta = timer.getDelta();
+
+          targetX += (mouseX - targetX) * 0.04;
+          targetY += (mouseY - targetY) * 0.04;
+
+          particles.rotation.y += delta * 0.04;
+          particles.rotation.x = targetY * 0.002;
+          particles.rotation.y += targetX * 0.002;
+
+          const pos = geometry.attributes.position.array;
+          for (let i = 0; i < particleCount; i++) {
+            pos[i * 3] += velocities[i].x;
+            pos[i * 3 + 1] += velocities[i].y;
+            pos[i * 3 + 2] += velocities[i].z;
+
+            if (Math.abs(pos[i * 3]) > 250) velocities[i].x *= -1;
+            if (Math.abs(pos[i * 3 + 1]) > 200) velocities[i].y *= -1;
+            if (Math.abs(pos[i * 3 + 2]) > 120) velocities[i].z *= -1;
+          }
+          geometry.attributes.position.needsUpdate = true;
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+      })();
+
+      // Pausar Three.js al entrar al editor para ahorrar 100% GPU
+      window.pauseThree = function() {
+        if (threeAnimId) {
+          cancelAnimationFrame(threeAnimId);
+          threeAnimId = null;
+        }
+      };
+    </script>
+
+    <!-- Lógica de Interacción y Apertura de Archivos -->
     <script>
       let isWasmReady = false;
       window.__pendingPdf = null;
@@ -700,6 +997,12 @@ try {
       }
 
       window.enterWorkspace = function() {
+        if (typeof window.trackEvent === 'function') {
+          window.trackEvent('enter_workspace_click');
+        }
+        if (typeof window.pauseThree === 'function') {
+          window.pauseThree();
+        }
         const landing = document.getElementById("landing-view");
         if (landing) {
           landing.classList.add("hidden");
@@ -732,6 +1035,13 @@ try {
           return;
         }
         
+        if (typeof window.trackEvent === 'function') {
+          window.trackEvent('open_pdf', {
+            'file_name': file.name,
+            'file_size': file.size
+          });
+        }
+
         window.enterWorkspace();
         showLoader("Abriendo " + file.name + "...");
 
@@ -744,7 +1054,7 @@ try {
             hideLoader();
           } else {
             window.__pendingPdf = { name: file.name, bytes: uint8 };
-            showLoader("Cargando motor WebAssembly...");
+            showLoader("Iniciando motor WebAssembly...");
           }
         };
         reader.readAsArrayBuffer(file);
