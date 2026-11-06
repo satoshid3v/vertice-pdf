@@ -54,6 +54,7 @@ fn main() {
                     // eframe never raises a close request on a browser reload or tab close, so `guard_quit` never
                     // prompts; ask the browser to confirm instead while a document has unsaved work (#812).
                     warn_before_unload(app.unsaved_flag.clone());
+                    register_global_open_handler(app.startup_inbox.clone(), cc.egui_ctx.clone());
                     // `?host=parent`: a same-origin page embedding PdfCraft in an iframe (such
                     // as the Nextcloud app) passes files in and takes saves back (`host` below).
                     if query_param("host").as_deref() == Some("parent")
@@ -76,7 +77,7 @@ fn main() {
             )
             .await;
         if started.is_ok() {
-            let _ = js_sys::eval("window.__dismissLoadingScreen && window.__dismissLoadingScreen()");
+            let _ = js_sys::eval("if (window.__onWasmReady) window.__onWasmReady(); else if (window.__dismissLoadingScreen) window.__dismissLoadingScreen();");
         }
         if let Err(e) = started {
             eframe::web_sys::console::error_1(&e);
@@ -100,6 +101,22 @@ fn warn_before_unload(unsaved: std::sync::Arc<std::sync::atomic::AtomicBool>) {
     });
     if window.add_event_listener_with_callback("beforeunload", handler.as_ref().unchecked_ref()).is_ok() {
         handler.forget();
+    }
+}
+
+#[cfg(target_arch = "wasm32")]
+fn register_global_open_handler(inbox: pdfcraft_ui_egui::Inbox, ctx: egui::Context) {
+    use eframe::wasm_bindgen::{closure::Closure, JsValue};
+    let open_cb = Closure::<dyn Fn(String, js_sys::Uint8Array)>::new(move |name: String, bytes: js_sys::Uint8Array| {
+        let name = if name.trim().is_empty() { "document.pdf".to_string() } else { name };
+        if let Ok(mut q) = inbox.lock() {
+            q.push((name, bytes.to_vec()));
+        }
+        ctx.request_repaint();
+    });
+    if let Some(window) = web_sys::window() {
+        let _ = js_sys::Reflect::set(&window, &JsValue::from_str("__openPdfFile"), open_cb.as_ref());
+        open_cb.forget();
     }
 }
 
