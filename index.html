@@ -33,14 +33,34 @@
     
 <script type="module">
 import init, * as bindings from './pdfcraft-web-60660ab31e82afb6.js';
-const wasm = await init({ module_or_path: './pdfcraft-web-60660ab31e82afb6_bg.wasm' });
 
+async function loadWasm() {
+  const resp = await fetch('./pdfcraft-web-60660ab31e82afb6_bg.wasm');
+  const buffer = await resp.arrayBuffer();
+  let bytes = new Uint8Array(buffer);
 
-window.wasmBindings = bindings;
+  // Si los bytes recibidos son Gzip (magic 1f 8b), descomprimir transparentemente
+  if (bytes[0] === 0x1f && bytes[1] === 0x8b) {
+    if (typeof DecompressionStream !== 'undefined') {
+      const stream = new Response(bytes).body.pipeThrough(new DecompressionStream('gzip'));
+      const decompressedBuffer = await new Response(stream).arrayBuffer();
+      bytes = new Uint8Array(decompressedBuffer);
+    }
+  }
 
+  return new Response(bytes, {
+    headers: { 'Content-Type': 'application/wasm' }
+  });
+}
 
-dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
-
+try {
+  const wasmResponse = await loadWasm();
+  const wasm = await init({ module_or_path: wasmResponse });
+  window.wasmBindings = bindings;
+  dispatchEvent(new CustomEvent("TrunkApplicationStarted", { detail: { wasm } }));
+} catch (err) {
+  console.error("Error al inicializar WebAssembly:", err);
+}
 </script>
 
     <!-- Datos Estructurados JSON-LD (Schema.org para Google Search) -->
@@ -539,7 +559,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         .dropzone-card { padding: 32px 16px; }
       }
     </style>
-  <link rel="modulepreload" href="./pdfcraft-web-60660ab31e82afb6.js" crossorigin="anonymous" integrity="sha384-64jZg2rP2wPPE5Q9mA4smUs6F2w1gwfTjC7uE9oC+eZ1s9ofoLEdUf5xnBOg6Iy1"><link rel="preload" href="./pdfcraft-web-60660ab31e82afb6_bg.wasm" crossorigin="anonymous" integrity="sha384-tE4OuDsoCEzJH7giNDg1wRrx9QvfeYMSdXco92f85OO+6FrDT3bm3uGX7V8CpaFE" as="fetch" type="application/wasm"></head>
+  <link rel="modulepreload" href="./pdfcraft-web-60660ab31e82afb6.js" crossorigin="anonymous"><link rel="preload" href="./pdfcraft-web-60660ab31e82afb6_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
   <body>
     <!-- Micro Loader flotante para operaciones en background -->
     <div id="micro-loader">
