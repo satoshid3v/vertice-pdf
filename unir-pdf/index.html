@@ -108,6 +108,30 @@
                 "@type": "Answer",
                 "text": "Es 100% libre y gratuito, sin suscripciones, sin límites de tamaño y sin marcas de agua."
               }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Es legal la firma digital realizada con Vértice PDF?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. Vértice PDF permite firmar electrónicamente documentos respetando estándares internacionales de validez legal como eIDAS y ESIGN Act sin compartir información confidencial con servidores de terceros."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Puedo usar Vértice PDF sin conexión a internet (Modo Avión)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. Una vez cargado el motor WebAssembly en tu navegador, todo se ejecuta de manera local en tu memoria RAM. Puedes apagar el WiFi o desconectar la red y continuar editando normalmente."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Qué navegadores son compatibles?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Es compatible con Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, Brave y Opera en sistemas Windows, macOS, Linux, Android e iOS."
+              }
             }
           ]
         }
@@ -592,12 +616,15 @@
         font-size: 13px;
         font-weight: 500;
         color: #e2e8f0;
+        text-decoration: none;
+        cursor: pointer;
         backdrop-filter: blur(12px);
         transition: all 0.2s ease;
       }
       .chip:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(41, 151, 255, 0.3);
+        background: rgba(255, 255, 255, 0.09);
+        border-color: rgba(41, 151, 255, 0.4);
+        color: #ffffff;
         transform: translateY(-1px);
       }
 
@@ -697,22 +724,116 @@
         color: var(--color-text-body);
       }
 
-      /* Footer de la Landing */
+      /* Sección Casos de Uso (SEO & Intención de Búsqueda) */
+      .usecases-section {
+        max-width: 1200px;
+        margin: 48px auto 20px;
+        padding: 0 32px;
+      }
+      .usecases-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .usecase-card {
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 26px 22px;
+        transition: border-color 0.2s ease;
+      }
+      .usecase-card:hover {
+        border-color: rgba(41, 151, 255, 0.35);
+      }
+      .usecase-card h4 {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .usecase-card p {
+        color: var(--color-text-body);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* Footer de la Landing con Enlaces Internos SEO */
       .landing-footer {
-        padding: 32px 24px;
+        padding: 56px 32px 32px;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
-        text-align: center;
-        font-size: 13.5px;
         color: var(--color-text-muted);
         background: rgba(7, 9, 14, 0.95);
         margin-top: auto;
       }
-      .landing-footer a {
+      .footer-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+        text-align: left;
+        margin-bottom: 40px;
+      }
+      @media (max-width: 840px) {
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+        }
+      }
+      @media (max-width: 540px) {
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .footer-col h4 {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-col a {
+        color: var(--color-text-body);
+        text-decoration: none;
+        font-size: 13.5px;
+        transition: color 0.2s ease;
+      }
+      .footer-col a:hover {
+        color: var(--color-accent-cyan);
+      }
+      .footer-brand p {
+        font-size: 13.5px;
+        line-height: 1.6;
+        color: var(--color-text-body);
+        max-width: 340px;
+        margin-top: 10px;
+      }
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        font-size: 12.5px;
+      }
+      .footer-bottom a {
         color: var(--color-accent-cyan);
         text-decoration: none;
-        font-weight: 500;
       }
-      .landing-footer a:hover {
+      .footer-bottom a:hover {
         text-decoration: underline;
       }
 
@@ -886,15 +1007,15 @@
             </div>
           </div>
 
-          <!-- Chips de Herramientas -->
-          <div class="feature-chips">
-            <div class="chip">✏️ Editar Texto</div>
-            <div class="chip">🖼️ Imágenes con 8 Puntos</div>
-            <div class="chip">📝 Formularios Interactivos</div>
-            <div class="chip">✒️ Firma Digital (E-Sign)</div>
-            <div class="chip">📑 Organizar Páginas</div>
-            <div class="chip">👁️ Visor HD Nativo</div>
-          </div>
+          <!-- Chips de Herramientas con Enlaces Semánticos para Googlebot -->
+          <nav class="feature-chips" aria-label="Herramientas destacadas">
+            <a href="/editar-texto-pdf" class="chip" title="Editar texto de PDF online gratis">✏️ Editar Texto</a>
+            <a href="/firmar-pdf-online" class="chip" title="Firmar PDF online gratis y seguro">✒️ Firma Digital (E-Sign)</a>
+            <a href="/unir-pdf" class="chip" title="Unir y combinar archivos PDF online">📑 Unir y Combinar PDF</a>
+            <span class="chip">🖼️ Imágenes con 8 Puntos</span>
+            <span class="chip">📝 Formularios Interactivos</span>
+            <span class="chip">👁️ Visor HD Nativo</span>
+          </nav>
 
           <!-- Banner de Confianza / Modo Avión -->
           <div class="trust-banner">
@@ -933,8 +1054,30 @@
           </div>
         </section>
 
+        <!-- Casos de Uso (Valor Semántico para Indexación en Google) -->
+        <section class="usecases-section">
+          <div class="section-heading">
+            <h2>Diseñado para la Privacidad en Cada Sector</h2>
+            <p>La alternativa confiable cuando tus documentos no pueden tocar la nube de terceros.</p>
+          </div>
+          <div class="usecases-grid">
+            <div class="usecase-card">
+              <h4>📑 Contratos y Legal</h4>
+              <p>Firma convenios, acuerdos de confidencialidad (NDA) y contratos sin temor a que cláusulas privadas se guarden en servidores externos.</p>
+            </div>
+            <div class="usecase-card">
+              <h4>💼 Finanzas y Empresas</h4>
+              <p>Revisa estados contables, balances e informes tributarios cumpliendo con normativas estrictas de protección de datos (RGPD / HIPAA).</p>
+            </div>
+            <div class="usecase-card">
+              <h4>🎓 Ámbito Académico</h4>
+              <p>Rellena formularios de postulación, combina tesis y edita textos de investigación sin limitaciones de páginas ni suscripciones de pago.</p>
+            </div>
+          </div>
+        </section>
+
         <!-- Preguntas Frecuentes (FAQ Semántico para Google Search) -->
-        <section class="faq-section">
+        <section class="faq-section" id="faq">
           <div class="section-heading">
             <h2>Preguntas Frecuentes</h2>
             <p>Todo lo que necesitas saber sobre Vértice PDF.</p>
@@ -952,11 +1095,62 @@
               <h3>¿Tiene algún costo o límite de uso?</h3>
               <p>No. Vértice PDF es completamente gratuito, sin suscripciones, sin necesidad de registro y sin marcas de agua forzadas.</p>
             </div>
+            <div class="faq-item">
+              <h3>¿Es legal la firma digital realizada con Vértice PDF?</h3>
+              <p>Sí. Vértice PDF permite firmar electrónicamente respetando normativas internacionales de firma electrónica (como eIDAS en la Unión Europea y ESIGN Act en Estados Unidos). Al procesarse de forma local, garantiza autenticidad y privacidad total.</p>
+            </div>
+            <div class="faq-item">
+              <h3>¿Puedo usar Vértice PDF sin conexión a internet (Modo Avión)?</h3>
+              <p>Totalmente. Una vez cargado el motor WebAssembly en tu navegador, todo se ejecuta de manera local en tu memoria RAM. Puedes apagar el WiFi, activar el Modo Avión o trabajar sin cobertura con total normalidad.</p>
+            </div>
+            <div class="faq-item">
+              <h3>¿Qué navegadores son compatibles con el editor?</h3>
+              <p>Es compatible con Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, Brave y Opera en sistemas Windows, macOS, Linux, Android e iOS.</p>
+            </div>
           </div>
         </section>
 
+        <!-- Footer Completo con Enlaces Internos SEO -->
         <footer class="landing-footer">
-          <p>Desarrollado por <strong>Vertice Codeium</strong> • Inspirado en <strong>PdfCraft</strong> • <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener">Código Abierto en GitHub</a></p>
+          <div class="footer-grid">
+            <div class="footer-col footer-brand">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <img src="/brand-logo.svg" alt="Vértice PDF Logo" style="width: 24px; height: 24px;" />
+                <strong style="color: #ffffff; font-size: 16px;">Vértice PDF</strong>
+              </div>
+              <p>Suite de edición, lectura, firma y combinación de archivos PDF de alto rendimiento, desarrollada en Rust y WebAssembly por Vertice Codeium. Procesamiento 100% local en tu dispositivo.</p>
+            </div>
+            <div class="footer-col">
+              <h4>Herramientas PDF</h4>
+              <ul>
+                <li><a href="/editar-texto-pdf">Editar Texto de PDF</a></li>
+                <li><a href="/firmar-pdf-online">Firmar PDF Online</a></li>
+                <li><a href="/unir-pdf">Unir y Combinar PDF</a></li>
+                <li><a href="/">Editor Completo</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Privacidad y Seguridad</h4>
+              <ul>
+                <li><a href="#landing-view">Modo Avión (Cero Red)</a></li>
+                <li><a href="#faq">Preguntas Frecuentes</a></li>
+                <li><a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener">Código Abierto en GitHub</a></li>
+                <li><a href="https://github.com/satoshid3v/vertice-pdf/blob/main/LICENSE" target="_blank" rel="noopener">Licencia MIT / Apache-2.0</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Desarrollador</h4>
+              <ul>
+                <li><a href="https://verticecodeium.com" target="_blank" rel="noopener">Vertice Codeium</a></li>
+                <li><a href="https://github.com/satoshid3v" target="_blank" rel="noopener">GitHub @satoshid3v</a></li>
+                <li><span style="color: #64748b; font-size: 13px;">Inspirado en PdfCraft</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>© 2026 <strong>Vertice Codeium</strong>. Todos los derechos reservados.</span>
+            <span>100% Procesamiento en Memoria RAM Local • Cero Almacenamiento en la Nube</span>
+          </div>
         </footer>
       </div>
     </main>
