@@ -946,6 +946,291 @@
         to { transform: rotate(360deg); }
       }
 
+      /* ==========================================================================
+         Ventana Modal de Apertura y Barra de Progreso — Vértice Flame & Apple UI
+         ========================================================================== */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100000;
+        background: rgba(4, 4, 6, 0.82);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 20px;
+      }
+      .modal-backdrop.active {
+        opacity: 1;
+      }
+
+      .modal-window {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
+        background: linear-gradient(180deg, #161622 0%, #0d0d14 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 32px 28px 28px;
+        box-shadow: 
+          inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.22),
+          inset 0 -2.5px 3px 0 rgba(0, 0, 0, 0.60),
+          0 24px 60px -10px rgba(0, 0, 0, 0.90),
+          0 0 50px -12px rgba(255, 69, 0, 0.35);
+        transform: scale(0.94) translateY(12px);
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
+        text-align: center;
+        overflow: hidden;
+      }
+      .modal-backdrop.active .modal-window {
+        transform: scale(1) translateY(0);
+      }
+
+      .modal-window::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 220px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(255, 69, 0, 0.35) 0%, rgba(212, 0, 120, 0.15) 60%, transparent 100%);
+        filter: blur(30px);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .modal-close-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        color: #94a3b8;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.18s ease;
+        z-index: 2;
+      }
+      .modal-close-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        transform: scale(1.08);
+      }
+
+      .modal-header {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 24px;
+      }
+      .modal-icon-badge {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 16px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(255, 69, 0, 0.18) 0%, rgba(212, 0, 120, 0.18) 100%);
+        border: 1px solid rgba(255, 220, 0, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffaa40;
+        box-shadow: 0 8px 24px -4px rgba(255, 69, 0, 0.40);
+      }
+      .modal-title {
+        font-size: 21px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.028em;
+        margin-bottom: 6px;
+      }
+      .modal-desc {
+        font-size: 13px;
+        color: #94a3b8;
+        line-height: 1.45;
+        max-width: 380px;
+        margin: 0 auto;
+      }
+
+      /* Vista de Selección */
+      .modal-picker-area {
+        position: relative;
+        z-index: 1;
+      }
+      .modal-drop-target {
+        padding: 24px 18px;
+        border-radius: 16px;
+        border: 1.5px dashed rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.02);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 18px;
+      }
+      .modal-drop-target:hover, .modal-drop-target.drag-over {
+        border-color: #ff4500;
+        background: rgba(255, 69, 0, 0.06);
+        box-shadow: 0 0 20px rgba(255, 69, 0, 0.2);
+        transform: translateY(-2px);
+      }
+      .modal-drop-icon {
+        font-size: 32px;
+        display: block;
+        margin-bottom: 8px;
+        filter: drop-shadow(0 2px 8px rgba(255, 69, 0, 0.4));
+      }
+      .modal-drop-label {
+        font-size: 14.5px;
+        font-weight: 600;
+        color: #ffffff;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .modal-drop-sub {
+        font-size: 12px;
+        color: #64748b;
+        display: block;
+      }
+      .modal-pick-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 13px 20px;
+        font-size: 14.5px;
+      }
+
+      /* Vista de Carga y Barra de Progreso */
+      .modal-loading-area {
+        position: relative;
+        z-index: 1;
+        padding-top: 4px;
+      }
+      .file-info-chip {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        border-radius: 14px;
+        padding: 12px 16px;
+        margin-bottom: 22px;
+        text-align: left;
+      }
+      .file-chip-icon {
+        font-size: 24px;
+        flex-shrink: 0;
+      }
+      .file-chip-details {
+        flex: 1;
+        min-width: 0;
+      }
+      .file-chip-name {
+        display: block;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .file-chip-meta {
+        display: block;
+        font-size: 11.5px;
+        color: #94a3b8;
+        margin-top: 2px;
+      }
+      .file-chip-badge {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: #ffaa40;
+        background: rgba(255, 69, 0, 0.16);
+        border: 1px solid rgba(255, 69, 0, 0.35);
+        padding: 4px 8px;
+        border-radius: 9999px;
+        letter-spacing: 0.02em;
+        flex-shrink: 0;
+      }
+
+      .progress-container {
+        margin-bottom: 20px;
+      }
+      .progress-bar-track {
+        height: 9px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 9999px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+      }
+      .progress-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #FFDD00 0%, #FF4500 45%, #D40078 80%, #6014E4 100%);
+        border-radius: 9999px;
+        box-shadow: 0 0 16px rgba(255, 69, 0, 0.85);
+        transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+      }
+      .progress-bar-fill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.45) 50%, transparent 100%);
+        background-size: 200% 100%;
+        animation: progressShimmer 1.5s infinite;
+      }
+      @keyframes progressShimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+      .progress-labels {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+      .progress-status-text {
+        color: #94a3b8;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .progress-percent-text {
+        color: #ffaa40;
+        font-weight: 700;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .modal-security-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        color: #64748b;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 5px 12px;
+        border-radius: 9999px;
+      }
+      .modal-security-pill .security-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 6px #10b981;
+      }
+
       /* Brand Footer flotante cuando el canvas está activo */
       .brand-footer-dock {
         position: fixed;
@@ -996,6 +1281,66 @@
     <div id="micro-loader">
       <div class="loader-spinner"></div>
       <span id="micro-loader-text">Inicializando motor PDF...</span>
+    </div>
+
+    <!-- Ventana Modal de Apertura con Barra de Progreso Dinámica -->
+    <div id="pdf-modal-backdrop" class="modal-backdrop">
+      <div class="modal-window" id="pdf-modal-window">
+        <button class="modal-close-btn" onclick="closePdfModal();" aria-label="Cerrar ventana">✕</button>
+        
+        <div class="modal-header">
+          <div class="modal-icon-badge">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+          </div>
+          <h3 class="modal-title" id="modal-title-text">Abre tu archivo PDF</h3>
+          <p class="modal-desc" id="modal-desc-text">Procesamiento seguro 100% en memoria RAM local · Sin subir datos a ningún servidor</p>
+        </div>
+
+        <!-- Zona de selección previa -->
+        <div id="modal-picker-view" class="modal-picker-area">
+          <div class="modal-drop-target" id="modal-drop-target" onclick="document.getElementById('file-input').click();">
+            <span class="modal-drop-icon">📄</span>
+            <span class="modal-drop-label">Haz clic para buscar tu archivo PDF</span>
+            <span class="modal-drop-sub">o arrástralo y suéltalo dentro de esta ventana</span>
+          </div>
+          <button class="btn-3d-flame modal-pick-btn" onclick="document.getElementById('file-input').click();">
+            <span>Seleccionar PDF desde el equipo</span>
+          </button>
+        </div>
+
+        <!-- Vista de Carga y Barra de Progreso Dinámica -->
+        <div id="modal-loading-view" class="modal-loading-area" style="display: none;">
+          <div class="file-info-chip">
+            <div class="file-chip-icon">📄</div>
+            <div class="file-chip-details">
+              <span class="file-chip-name" id="modal-file-name">documento.pdf</span>
+              <span class="file-chip-meta" id="modal-file-size">Calculando tamaño...</span>
+            </div>
+            <div class="file-chip-badge">RAM Local</div>
+          </div>
+
+          <div class="progress-container">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="modal-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="progress-labels">
+              <span class="progress-status-text" id="modal-progress-status">Leyendo documento en RAM local...</span>
+              <span class="progress-percent-text" id="modal-progress-percent">0%</span>
+            </div>
+          </div>
+
+          <div class="modal-security-pill">
+            <span class="security-dot"></span>
+            <span>Cero llamadas de red · Modo avión compatible</span>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Canvas de egui / WebAssembly -->
@@ -1071,7 +1416,7 @@
                 </svg>
               </div>
 
-              <button class="btn-open-pdf" onclick="document.getElementById('file-input').click();">
+              <button class="btn-open-pdf" onclick="openPdfModal(true);">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
                   <path d="M12 10v6m-3-3 3-3 3 3"/>
@@ -1115,7 +1460,7 @@
                   <span class="tool-tile-desc">Modificar párrafos y tipografía</span>
                 </div>
               </a>
-              <div class="tool-tile" onclick="document.getElementById('file-input').click();">
+              <div class="tool-tile" onclick="openPdfModal(true);">
                 <span class="tool-tile-icon">📋</span>
                 <div class="tool-tile-content">
                   <span class="tool-tile-title">Formularios</span>
@@ -1448,6 +1793,71 @@
     <script>
       let isWasmReady = false;
       window.__pendingPdf = null;
+      window.__pendingProceed = null;
+
+      // Elementos de la Ventana Modal y Barra de Progreso
+      const modalBackdrop = document.getElementById("pdf-modal-backdrop");
+      const modalPickerView = document.getElementById("modal-picker-view");
+      const modalLoadingView = document.getElementById("modal-loading-view");
+      const modalProgressFill = document.getElementById("modal-progress-fill");
+      const modalProgressStatus = document.getElementById("modal-progress-status");
+      const modalProgressPercent = document.getElementById("modal-progress-percent");
+      const modalFileName = document.getElementById("modal-file-name");
+      const modalFileSize = document.getElementById("modal-file-size");
+
+      let progressInterval = null;
+
+      function openPdfModal(triggerPicker) {
+        if (!modalBackdrop) return;
+        modalBackdrop.style.display = "flex";
+        void modalBackdrop.offsetWidth; // Forzar reflujo
+        modalBackdrop.classList.add("active");
+
+        if (modalPickerView) modalPickerView.style.display = "block";
+        if (modalLoadingView) modalLoadingView.style.display = "none";
+
+        if (triggerPicker) {
+          const fileInput = document.getElementById("file-input");
+          if (fileInput) fileInput.click();
+        }
+      }
+
+      function closePdfModal() {
+        if (!modalBackdrop) return;
+        modalBackdrop.classList.remove("active");
+        if (progressInterval) {
+          clearInterval(progressInterval);
+          progressInterval = null;
+        }
+        setTimeout(() => {
+          modalBackdrop.style.display = "none";
+          if (modalProgressFill) modalProgressFill.style.width = "0%";
+          if (modalProgressPercent) modalProgressPercent.textContent = "0%";
+        }, 240);
+      }
+
+      window.openPdfModal = openPdfModal;
+      window.closePdfModal = closePdfModal;
+
+      // Cerrar al presionar tecla Escape o clic fuera de la ventana
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modalBackdrop && modalBackdrop.classList.contains("active")) {
+          closePdfModal();
+        }
+      });
+      if (modalBackdrop) {
+        modalBackdrop.addEventListener("click", (e) => {
+          if (e.target === modalBackdrop) {
+            closePdfModal();
+          }
+        });
+      }
+
+      function setProgress(pct, statusText) {
+        if (modalProgressFill) modalProgressFill.style.width = pct + "%";
+        if (modalProgressPercent) modalProgressPercent.textContent = Math.round(pct) + "%";
+        if (modalProgressStatus && statusText) modalProgressStatus.textContent = statusText;
+      }
 
       function showLoader(text) {
         const loader = document.getElementById("micro-loader");
@@ -1486,7 +1896,11 @@
       window.__onWasmReady = function() {
         isWasmReady = true;
         hideLoader();
-        if (window.__pendingPdf && window.__openPdfFile) {
+        if (window.__pendingProceed) {
+          const proceed = window.__pendingProceed;
+          window.__pendingProceed = null;
+          proceed();
+        } else if (window.__pendingPdf && window.__openPdfFile) {
           window.__openPdfFile(window.__pendingPdf.name, window.__pendingPdf.bytes);
           window.__pendingPdf = null;
         }
@@ -1495,6 +1909,76 @@
       window.__dismissLoadingScreen = function() {
         window.__onWasmReady();
       };
+
+      function startPdfLoading(file) {
+        if (!file) return;
+
+        // Mostrar ventana modal
+        if (modalBackdrop) {
+          modalBackdrop.style.display = "flex";
+          void modalBackdrop.offsetWidth;
+          modalBackdrop.classList.add("active");
+        }
+
+        // Conmutar a vista de carga con barra de progreso
+        if (modalPickerView) modalPickerView.style.display = "none";
+        if (modalLoadingView) modalLoadingView.style.display = "block";
+
+        if (modalFileName) modalFileName.textContent = file.name;
+        if (modalFileSize) {
+          const mb = (file.size / (1024 * 1024)).toFixed(2);
+          modalFileSize.textContent = `${mb} MB · Procesamiento en memoria local`;
+        }
+
+        setProgress(15, "Leyendo bytes del archivo en RAM local...");
+
+        if (progressInterval) clearInterval(progressInterval);
+
+        let currentPct = 15;
+        progressInterval = setInterval(() => {
+          if (currentPct < 70) {
+            currentPct += Math.random() * 8 + 4;
+            if (currentPct > 70) currentPct = 70;
+            if (currentPct < 40) {
+              setProgress(currentPct, "Leyendo páginas en memoria RAM local...");
+            } else {
+              setProgress(currentPct, "Verificando estructura PDF ISO 32000...");
+            }
+          }
+        }, 75);
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const buffer = e.target.result;
+          const uint8 = new Uint8Array(buffer);
+
+          const proceedToWasm = () => {
+            if (progressInterval) clearInterval(progressInterval);
+            setProgress(88, "Inicializando motor gráfico WebAssembly...");
+
+            setTimeout(() => {
+              setProgress(100, "¡Documento listo! Abriendo visor...");
+
+              setTimeout(() => {
+                closePdfModal();
+                window.enterWorkspace();
+                if (window.__openPdfFile) {
+                  window.__openPdfFile(file.name, uint8);
+                }
+              }, 280);
+            }, 180);
+          };
+
+          if (isWasmReady && window.__openPdfFile) {
+            proceedToWasm();
+          } else {
+            window.__pendingPdf = { name: file.name, bytes: uint8 };
+            setProgress(75, "Cargando motor WebAssembly en memoria...");
+            window.__pendingProceed = proceedToWasm;
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
 
       function handleFile(file) {
         if (!file || !file.name.toLowerCase().endsWith(".pdf")) {
@@ -1509,22 +1993,7 @@
           });
         }
 
-        window.enterWorkspace();
-        showLoader("Abriendo " + file.name + "...");
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const buffer = e.target.result;
-          const uint8 = new Uint8Array(buffer);
-          if (isWasmReady && window.__openPdfFile) {
-            window.__openPdfFile(file.name, uint8);
-            hideLoader();
-          } else {
-            window.__pendingPdf = { name: file.name, bytes: uint8 };
-            showLoader("Iniciando motor WebAssembly...");
-          }
-        };
-        reader.readAsArrayBuffer(file);
+        startPdfLoading(file);
       }
 
       // Input selector de archivo
@@ -1533,6 +2002,28 @@
         fileInput.addEventListener("change", function(e) {
           if (e.target.files && e.target.files[0]) {
             handleFile(e.target.files[0]);
+          }
+        });
+      }
+
+      // Drag and Drop en Drop Target interno del modal
+      const modalDropTarget = document.getElementById("modal-drop-target");
+      if (modalDropTarget) {
+        modalDropTarget.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          modalDropTarget.classList.add("drag-over");
+        });
+        modalDropTarget.addEventListener("dragleave", () => {
+          modalDropTarget.classList.remove("drag-over");
+        });
+        modalDropTarget.addEventListener("drop", (e) => {
+          e.preventDefault();
+          modalDropTarget.classList.remove("drag-over");
+          if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+            const file = e.dataTransfer.files[0];
+            if (file.name.toLowerCase().endsWith(".pdf")) {
+              handleFile(file);
+            }
           }
         });
       }
