@@ -8,8 +8,8 @@ use egui::{Color32, CornerRadius, FontData, FontDefinitions, FontFamily, FontId,
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize)]
 pub enum ThemeKind {
-    #[default]
     Light,
+    #[default]
     Dark,
 }
 
@@ -17,8 +17,8 @@ pub enum ThemeKind {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize)]
 pub enum ThemePreference {
     System,
-    #[default]
     Light,
+    #[default]
     Dark,
 }
 
@@ -85,44 +85,44 @@ impl Tokens {
                 icon: Color32::from_rgb(0x33, 0x41, 0x55),
                 hover: Color32::from_rgb(0xF1, 0xF5, 0xF9),
                 pressed: Color32::from_rgb(0xE2, 0xE8, 0xF0),
-                selected: Color32::from_rgb(0xEE, 0xF2, 0xFF),
-                accent: Color32::from_rgb(0x25, 0x63, 0xEB),
-                accent_text: Color32::from_rgb(0x1D, 0x4E, 0xD8),
-                accent_soft: Color32::from_rgb(0xEE, 0xF2, 0xFF),
+                selected: Color32::from_rgb(0xFF, 0xF0, 0xEB),
+                accent: Color32::from_rgb(0xFF, 0x45, 0x00),
+                accent_text: Color32::from_rgb(0xDD, 0x33, 0x00),
+                accent_soft: Color32::from_rgb(0xFF, 0xF0, 0xEB),
                 field: Color32::from_rgb(0xFF, 0xFF, 0xFF),
-                badge_new: Color32::from_rgb(0x25, 0x63, 0xEB),
+                badge_new: Color32::from_rgb(0xFF, 0x45, 0x00),
                 page_shadow: Color32::from_black_alpha(26),
                 radius: 8,
             },
             ThemeKind::Dark => Self {
                 kind,
-                titlebar: Color32::from_rgb(0x0F, 0x17, 0x2A),
-                chrome: Color32::from_rgb(0x1E, 0x29, 0x3B),
-                panel: Color32::from_rgb(0x1E, 0x29, 0x3B),
-                pasteboard: Color32::from_rgb(0x0B, 0x11, 0x20),
-                card: Color32::from_rgb(0x1E, 0x29, 0x3B),
-                border: Color32::from_rgb(0x33, 0x41, 0x55),
-                divider: Color32::from_rgb(0x28, 0x35, 0x48),
+                titlebar: Color32::from_rgb(0x06, 0x06, 0x08),
+                chrome: Color32::from_rgb(0x0C, 0x0C, 0x12),
+                panel: Color32::from_rgb(0x0C, 0x0C, 0x12),
+                pasteboard: Color32::from_rgb(0x06, 0x06, 0x08),
+                card: Color32::from_rgb(0x11, 0x11, 0x18),
+                border: Color32::from_rgb(0x22, 0x22, 0x2E),
+                divider: Color32::from_rgb(0x1A, 0x1A, 0x24),
                 text: Color32::from_rgb(0xF8, 0xFA, 0xFC),
                 text_muted: Color32::from_rgb(0x94, 0xA3, 0xB8),
-                text_faint: Color32::from_rgb(0x64, 0x74, 0x8B),
+                text_faint: Color32::from_rgb(0x82, 0x90, 0xA4),
                 icon: Color32::from_rgb(0xE2, 0xE8, 0xF0),
-                hover: Color32::from_rgb(0x29, 0x35, 0x48),
-                pressed: Color32::from_rgb(0x33, 0x41, 0x55),
-                selected: Color32::from_rgb(0x1E, 0x3A, 0x6B),
-                accent: Color32::from_rgb(0x38, 0xBD, 0xF8),
-                accent_text: Color32::from_rgb(0x7D, 0xD3, 0xFC),
-                accent_soft: Color32::from_rgb(0x17, 0x25, 0x44),
-                field: Color32::from_rgb(0x0F, 0x17, 0x2A),
-                badge_new: Color32::from_rgb(0x38, 0xBD, 0xF8),
-                page_shadow: Color32::from_black_alpha(120),
+                hover: Color32::from_rgb(0x1F, 0x1F, 0x2C),
+                pressed: Color32::from_rgb(0x2A, 0x2A, 0x3A),
+                selected: Color32::from_rgb(0x3B, 0x1A, 0x30),
+                accent: Color32::from_rgb(0xFF, 0x45, 0x00),
+                accent_text: Color32::from_rgb(0xFF, 0x88, 0x33),
+                accent_soft: Color32::from_rgb(0x38, 0x12, 0x08),
+                field: Color32::from_rgb(0x08, 0x08, 0x0D),
+                badge_new: Color32::from_rgb(0xFF, 0x45, 0x00),
+                page_shadow: Color32::from_black_alpha(140),
                 radius: 8,
             },
         }
     }
 
     pub fn get(ctx: &egui::Context) -> Self {
-        ctx.data(|d| d.get_temp::<Tokens>(egui::Id::new("pdfcraft-theme"))).unwrap_or_else(|| Self::for_kind(ThemeKind::Light))
+        ctx.data(|d| d.get_temp::<Tokens>(egui::Id::new("pdfcraft-theme"))).unwrap_or_else(|| Self::for_kind(ThemeKind::Dark))
     }
 
     pub fn dark(&self) -> bool {

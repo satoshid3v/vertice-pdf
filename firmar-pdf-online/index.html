@@ -145,10 +145,10 @@
 
     <!-- Cargador de WebAssembly con Descompresión Transparente -->
     <script type="module">
-      import init, * as bindings from '/pdfcraft-web-60660ab31e82afb6.js';
+      import init, * as bindings from '/pdfcraft-web-7686f69e275dd886.js';
 
       async function loadWasm() {
-        const resp = await fetch('/pdfcraft-web-60660ab31e82afb6_bg.wasm');
+        const resp = await fetch('/pdfcraft-web-7686f69e275dd886_bg.wasm');
         const buffer = await resp.arrayBuffer();
         let bytes = new Uint8Array(buffer);
 
@@ -223,7 +223,7 @@
         display: block;
         outline: none;
         z-index: 10;
-        background: #f1f1f3;
+        background: #060608;
       }
 
       /* Contenedor Principal de la Landing Page a Pantalla Completa Real */

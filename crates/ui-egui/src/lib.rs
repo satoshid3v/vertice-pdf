@@ -879,8 +879,8 @@ impl PdfCraftApp {
             quick_tool: QuickTool::Select,
             space_hand: None,
             comment_prefs: Default::default(),
-            theme: ThemeKind::Light,
-            theme_preference: ThemePreference::Light,
+            theme: ThemeKind::Dark,
+            theme_preference: ThemePreference::Dark,
             reading_colors: Default::default(),
             #[cfg(target_os = "linux")]
             desktop_theme: None,
@@ -1953,7 +1953,7 @@ impl PdfCraftApp {
                 system = desktop.get().map(|appearance| appearance == pdfcraft_platform::desktop_theme::DesktopAppearance::Dark);
             }
         }
-        let kind = self.theme_preference.resolve(system, ThemeKind::Light);
+        let kind = self.theme_preference.resolve(system, ThemeKind::Dark);
         if kind != self.theme {
             self.theme = kind;
             theme::apply(ctx, kind);
