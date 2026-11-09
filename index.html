@@ -176,15 +176,16 @@
       }
     </script>
 
-        <style>
+            <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
       :root {
         /* Superficies y Lienzos: Apple Dark Rhythm */
         --surface-void: #060608;
         --surface-tile-charcoal: #0c0c12;
-        --surface-tile-graphite: #111118;
-        --surface-frosted: rgba(6, 6, 8, 0.78);
+        --surface-tile-graphite: #0f0f15;
+        --surface-tile-elevated: #14141e;
+        --surface-frosted: rgba(6, 6, 8, 0.82);
         --border-subtle: rgba(255, 255, 255, 0.08);
         --border-focus: rgba(255, 255, 255, 0.18);
 
@@ -196,11 +197,11 @@
 
         --gradient-flame-h: linear-gradient(90deg, #FFDD00 0%, #FF4500 35%, #D40078 70%, #6014E4 100%);
         --gradient-flame-v: linear-gradient(180deg, #FF4500 0%, #D40078 60%, #6014E4 100%);
-        --gradient-flame-card: linear-gradient(135deg, rgba(255, 69, 0, 0.55) 0%, rgba(212, 0, 120, 0.35) 50%, rgba(96, 20, 228, 0.45) 100%);
+        --gradient-flame-card: linear-gradient(135deg, rgba(255, 69, 0, 0.4) 0%, rgba(212, 0, 120, 0.2) 50%, rgba(96, 20, 228, 0.3) 100%);
 
         --color-text-title: #ffffff;
-        --color-text-body: #a1a1aa;
-        --color-text-muted: #71717a;
+        --color-text-body: #94a3b8;
+        --color-text-muted: #64748b;
       }
 
       html, body {
@@ -235,13 +236,13 @@
         overflow-y: auto;
         overflow-x: hidden;
         background: 
-          radial-gradient(ellipse 90% 65% at 50% -10%, rgba(255, 69, 0, 0.16), transparent 75%),
-          radial-gradient(ellipse 70% 50% at 95% 45%, rgba(212, 0, 120, 0.10), transparent 70%),
-          radial-gradient(ellipse 60% 45% at 5% 55%, rgba(96, 20, 228, 0.12), transparent 70%),
+          radial-gradient(circle 800px at 50% 60px, rgba(255, 69, 0, 0.08), transparent 70%),
+          radial-gradient(circle 600px at 85% 280px, rgba(212, 0, 120, 0.04), transparent 70%),
+          radial-gradient(circle 600px at 15% 320px, rgba(96, 20, 228, 0.05), transparent 70%),
           var(--surface-void);
         display: flex;
         flex-direction: column;
-        transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s ease;
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
       }
       #landing-view.hidden {
         opacity: 0;
@@ -249,18 +250,7 @@
         pointer-events: none;
       }
 
-      /* Canvas 3D de Three.js para Efecto Ambiental a Pantalla Completa */
-      #three-canvas {
-        position: fixed;
-        inset: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 1;
-        opacity: 0.92;
-      }
-
-      /* Contenido superpuesto sobre Three.js */
+      /* Contenido centrado */
       .landing-content {
         position: relative;
         z-index: 2;
@@ -275,119 +265,109 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        padding: 16px 32px;
+        padding: 14px 24px;
         width: 100%;
         display: flex;
         justify-content: center;
       }
       .landing-nav {
         width: 100%;
-        max-width: 1200px;
+        max-width: 1120px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 22px;
+        padding: 10px 20px;
         background: var(--surface-frosted);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         border: 1px solid var(--border-subtle);
         border-radius: 9999px;
         box-shadow: 
-          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
           0 16px 36px -8px rgba(0, 0, 0, 0.6);
       }
       .brand-group {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         text-decoration: none;
         color: inherit;
       }
       .brand-logo-img {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         border-radius: 8px;
-        filter: drop-shadow(0 2px 10px rgba(255, 69, 0, 0.45));
+        filter: drop-shadow(0 2px 8px rgba(255, 69, 0, 0.4));
       }
       .brand-title {
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 700;
         letter-spacing: -0.02em;
         color: #ffffff;
-      }
-      .brand-title span {
-        background: var(--gradient-flame-h);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 600;
-        font-size: 13px;
-        margin-left: 4px;
       }
 
       .nav-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
       .badge-privacy {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
-        padding: 5px 14px;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.28);
+        gap: 6px;
+        padding: 5px 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-subtle);
         border-radius: 9999px;
-        font-size: 12px;
+        font-size: 11.5px;
         font-weight: 500;
-        color: #34d399;
+        color: #a1a1aa;
       }
       .pulse-dot {
         width: 6px;
         height: 6px;
         background: #10b981;
         border-radius: 50%;
-        box-shadow: 0 0 8px #10b981;
-        animation: pulse 2s infinite ease-in-out;
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-      }
-
-      /* Botón Secundario Mate Biselado (.btn-3d-dark) */
-      .btn-ghost-nav {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 18px;
-        border-radius: 9999px;
-        font-size: 13px;
-        font-weight: 500;
-        color: #f1f5f9;
-        background: linear-gradient(180deg, #1b1b26 0%, #111118 100%);
-        border: 1px solid var(--border-subtle);
-        box-shadow: 
-          inset 0 1.2px 1px 0 rgba(255, 255, 255, 0.18),
-          inset 0 -2px 3px 0 rgba(0, 0, 0, 0.60),
-          0 6px 16px 0 rgba(0, 0, 0, 0.45);
-        cursor: pointer;
-        transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease;
-      }
-      .btn-ghost-nav:hover {
-        background: linear-gradient(180deg, #242433 0%, #151520 100%);
-        border-color: var(--border-focus);
-        color: #ffffff;
-        transform: translateY(-1.5px);
-      }
-      .btn-ghost-nav:active {
-        transform: scale(0.97) translateY(1.5px);
+        box-shadow: 0 0 6px #10b981;
       }
 
       .btn-github-nav {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 8px 16px;
+        padding: 7px 14px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #f1f5f9;
+        background: linear-gradient(180deg, #1b1b26 0%, #111118 100%);
+        border: 1px solid var(--border-subtle);
+        box-shadow: 
+          inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+          0 4px 12px 0 rgba(0, 0, 0, 0.4);
+        text-decoration: none;
+        transition: all 0.15s ease;
+      }
+      .btn-github-nav:hover {
+        background: linear-gradient(180deg, #242433 0%, #151520 100%);
+        border-color: var(--border-focus);
+        transform: translateY(-1px);
+      }
+      .gh-star-badge {
+        background: rgba(255, 220, 0, 0.15);
+        border: 1px solid rgba(255, 220, 0, 0.3);
+        padding: 1px 6px;
+        border-radius: 9999px;
+        font-size: 10.5px;
+        color: #ffd43f;
+        font-weight: 600;
+      }
+
+      .btn-ghost-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 16px;
         border-radius: 9999px;
         font-size: 12.5px;
         font-weight: 500;
@@ -395,146 +375,122 @@
         background: linear-gradient(180deg, #1b1b26 0%, #111118 100%);
         border: 1px solid var(--border-subtle);
         box-shadow: 
-          inset 0 1.2px 1px 0 rgba(255, 255, 255, 0.18),
-          inset 0 -2px 3px 0 rgba(0, 0, 0, 0.60),
-          0 6px 16px 0 rgba(0, 0, 0, 0.45);
-        text-decoration: none;
-        transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, border-color 0.15s ease;
+          inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+          0 4px 12px 0 rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+        transition: all 0.15s ease;
       }
-      .btn-github-nav:hover {
+      .btn-ghost-nav:hover {
         background: linear-gradient(180deg, #242433 0%, #151520 100%);
         border-color: var(--border-focus);
         color: #ffffff;
-        transform: translateY(-1.5px);
+        transform: translateY(-1px);
       }
-      .btn-github-nav:active {
-        transform: scale(0.97) translateY(1.5px);
-      }
-      .gh-star-badge {
-        background: rgba(255, 220, 0, 0.18);
-        border: 1px solid rgba(255, 220, 0, 0.35);
-        padding: 2px 7px;
-        border-radius: 9999px;
-        font-size: 11px;
-        color: #ffd43f;
-        font-weight: 600;
+      .btn-ghost-nav:active {
+        transform: scale(0.97) translateY(1px);
       }
 
-      /* Banner de Confianza y Modo Avión */
-      .trust-banner {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        max-width: 740px;
-        margin: 22px auto 0;
-        padding: 12px 20px;
-        background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.25);
-        border-radius: 14px;
-        font-size: 13.5px;
-        color: #e2e8f0;
-        text-align: left;
-        backdrop-filter: blur(12px);
-      }
-      .trust-icon {
-        font-size: 20px;
-        flex-shrink: 0;
-      }
-      .trust-text {
-        flex: 1;
-        line-height: 1.45;
-      }
-      .trust-text strong {
-        color: #34d399;
-      }
-      .trust-link {
-        color: #ffaa40;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 12.5px;
-        white-space: nowrap;
-        transition: color 0.2s ease;
-      }
-      .trust-link:hover {
-        color: #ffd43f;
-        text-decoration: underline;
-      }
-
-      /* Hero Section Ampliada y Balanceada para Widescreen */
+      /* Hero Section Organizada y Limpia */
       .hero-section {
         width: 100%;
-        max-width: 1120px;
-        margin: 28px auto 20px;
-        padding: 0 32px;
+        max-width: 980px;
+        margin: 12px auto 24px;
+        padding: 0 24px;
         text-align: center;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
+
+      /* Escenario del Objeto 3D Oficial de Marca */
+      .hero-3d-stage {
+        width: 130px;
+        height: 130px;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .hero-3d-stage::after {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        background: radial-gradient(circle, rgba(255, 69, 0, 0.3) 0%, rgba(212, 0, 120, 0.15) 50%, transparent 70%);
+        filter: blur(16px);
+        z-index: -1;
+        pointer-events: none;
+      }
+      #hero-3d-canvas {
+        width: 130px;
+        height: 130px;
+        display: block;
+      }
+
       .hero-eyebrow {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        font-size: 11.5px;
+        gap: 8px;
+        font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: #ffd43f;
-        background: rgba(255, 69, 0, 0.12);
-        border: 1px solid rgba(255, 120, 0, 0.3);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        padding: 6px 16px;
+        color: #ffaa40;
+        background: rgba(255, 69, 0, 0.08);
+        border: 1px solid rgba(255, 120, 0, 0.22);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        padding: 5px 14px;
         border-radius: 9999px;
-        margin-bottom: 20px;
-        backdrop-filter: blur(8px);
+        margin-bottom: 14px;
+      }
+      .eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #ff4500;
+        box-shadow: 0 0 6px #ff4500;
       }
 
       .hero-title {
-        font-size: 58px;
+        font-size: 48px;
         font-weight: 800;
-        line-height: 1.06;
-        letter-spacing: -0.038em;
+        line-height: 1.08;
+        letter-spacing: -0.035em;
         color: #ffffff;
-        margin-bottom: 18px;
-        max-width: 960px;
-        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        margin-bottom: 14px;
+        max-width: 860px;
       }
       .hero-title .gradient-text {
         background: var(--gradient-flame-h);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         display: block;
-        margin-top: 4px;
-        filter: drop-shadow(0 4px 18px rgba(255, 69, 0, 0.35));
+        margin-top: 2px;
       }
 
       .hero-description {
-        font-size: 17px;
-        line-height: 1.48;
-        letter-spacing: -0.02em;
+        font-size: 16.5px;
+        line-height: 1.5;
+        letter-spacing: -0.015em;
         color: var(--color-text-body);
-        max-width: 740px;
-        margin-bottom: 32px;
-        font-weight: 400;
+        max-width: 680px;
+        margin-bottom: 28px;
       }
 
       /* Tarjeta de Acción / Dropzone Interactiva */
       .drop-card-container {
         width: 100%;
-        max-width: 640px;
+        max-width: 600px;
         position: relative;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
       }
       
       .dropzone-card {
         width: 100%;
-        background: var(--surface-tile-graphite);
-        backdrop-filter: blur(28px);
-        -webkit-backdrop-filter: blur(28px);
+        background: #0d0d12;
         border: 1px solid var(--border-subtle);
-        border-radius: 28px;
-        padding: 40px 28px;
+        border-radius: 24px;
+        padding: 34px 24px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -543,56 +499,42 @@
         overflow: hidden;
         cursor: pointer;
         box-shadow: 
-          inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.08),
-          0 28px 60px -12px rgba(0, 0, 0, 0.65);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 24px 48px -12px rgba(0, 0, 0, 0.6);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       }
-
-      /* Glow sutil en el borde de la tarjeta con gradiente flame */
-      .dropzone-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 28px;
-        padding: 1px;
-        background: var(--gradient-flame-card);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-      }
-
       .dropzone-card:hover, .dropzone-card.drag-over {
-        transform: translateY(-3px) scale(1.01);
-        border-color: rgba(255, 69, 0, 0.45);
+        transform: translateY(-2px);
+        border-color: rgba(255, 69, 0, 0.4);
         box-shadow: 
-          inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.15),
-          0 32px 64px -12px rgba(255, 69, 0, 0.25),
-          0 0 35px rgba(212, 0, 120, 0.2);
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 28px 56px -12px rgba(0, 0, 0, 0.7),
+          0 0 24px rgba(255, 69, 0, 0.15);
       }
       .dropzone-card.drag-over {
+        background: #13131a;
         border-color: #ff4500;
-        background: rgba(255, 69, 0, 0.12);
       }
 
       .icon-doc-floating {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 20px;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, rgba(255, 69, 0, 0.25), rgba(96, 20, 228, 0.35));
-        border: 1px solid rgba(255, 220, 0, 0.35);
-        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(255, 69, 0, 0.18), rgba(96, 20, 228, 0.25));
+        border: 1px solid rgba(255, 120, 0, 0.25);
+        border-radius: 16px;
         box-shadow: 
-          inset 0 1px 1px rgba(255, 255, 255, 0.3),
-          0 12px 24px -4px rgba(255, 69, 0, 0.35);
-        color: #ffffff;
-        transition: transform 0.3s ease;
+          inset 0 1px 0 rgba(255, 255, 255, 0.2),
+          0 8px 18px rgba(0, 0, 0, 0.35);
+        color: #ff9000;
+        transition: transform 0.25s ease;
       }
       .dropzone-card:hover .icon-doc-floating {
-        transform: translateY(-4px) scale(1.05);
+        transform: translateY(-2px) scale(1.05);
+        color: #ffaa40;
       }
 
       /* Botón Primario Flame 3D Biselado (.btn-3d-flame) */
@@ -600,10 +542,10 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 14px 40px;
+        padding: 13px 36px;
         background: var(--gradient-flame-v);
         color: #ffffff;
-        font-size: 16px;
+        font-size: 15.5px;
         font-weight: 600;
         border-radius: 9999px;
         border: 1px solid rgba(255, 220, 0, 0.4);
@@ -614,7 +556,7 @@
           0 8px 24px -2px rgba(212, 0, 120, 0.45),
           0 2px 4px 0 rgba(0, 0, 0, 0.40);
         transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s ease, filter 0.15s ease;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
       .btn-open-pdf:hover {
         transform: translateY(-2px);
@@ -631,213 +573,293 @@
       }
 
       .dropzone-subtitle {
-        font-size: 14.5px;
+        font-size: 14px;
         color: var(--color-text-body);
         font-weight: 400;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
       }
 
       .drop-meta-row {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-size: 12px;
+        gap: 8px;
+        font-size: 11.5px;
         color: var(--color-text-muted);
       }
-      .drop-meta-row span {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
+      .meta-sep {
+        color: rgba(255, 255, 255, 0.2);
       }
 
-      /* Chips de Herramientas Rediseñados */
-      .feature-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 18px;
-        max-width: 680px;
+      /* Quick Tools Grid (Organizado en 4 columnas simétricas) */
+      .tools-showcase {
+        width: 100%;
+        max-width: 860px;
+        margin: 12px auto 0;
       }
-      .chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        padding: 8px 16px;
+      .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      @media (max-width: 768px) {
+        .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      .tool-tile {
         background: var(--surface-tile-graphite);
         border: 1px solid var(--border-subtle);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        border-radius: 9999px;
-        font-size: 13px;
-        font-weight: 500;
-        color: #e2e8f0;
+        border-radius: 16px;
+        padding: 14px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         text-decoration: none;
+        color: inherit;
         cursor: pointer;
-        backdrop-filter: blur(12px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .chip:hover {
-        background: rgba(255, 69, 0, 0.15);
-        border-color: rgba(255, 69, 0, 0.45);
+      .tool-tile:hover {
+        background: var(--surface-tile-elevated);
+        border-color: rgba(255, 69, 0, 0.35);
+        transform: translateY(-2px);
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 8px 20px rgba(0, 0, 0, 0.4);
+      }
+      .tool-tile-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .tool-tile-content {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        min-width: 0;
+      }
+      .tool-tile-title {
+        font-size: 13px;
+        font-weight: 600;
         color: #ffffff;
-        transform: translateY(-1.5px);
-        box-shadow: 0 4px 14px rgba(255, 69, 0, 0.25);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tool-tile-desc {
+        font-size: 11px;
+        color: var(--color-text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 2px;
       }
 
-      /* Bento Grid de Características (Lienzo Alternado) */
+      /* Banner de Confianza y Modo Avión Cohesivo */
+      .trust-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        max-width: 860px;
+        margin: 20px auto 0;
+        padding: 12px 20px;
+        background: var(--surface-tile-graphite);
+        border: 1px solid var(--border-subtle);
+        border-radius: 16px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        text-align: left;
+      }
+      @media (max-width: 768px) {
+        .trust-banner { flex-direction: column; align-items: flex-start; }
+      }
+      .trust-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #ffaa40;
+        background: rgba(255, 69, 0, 0.1);
+        border: 1px solid rgba(255, 120, 0, 0.25);
+        padding: 4px 10px;
+        border-radius: 9999px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .trust-text {
+        flex: 1;
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--color-text-body);
+      }
+      .trust-text strong {
+        color: #ffffff;
+      }
+      .trust-link {
+        color: #ffaa40;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.15s ease;
+      }
+      .trust-link:hover {
+        color: #ffd43f;
+        text-decoration: underline;
+      }
+
+      /* Bento Grid de Características */
       .features-section {
-        max-width: 1200px;
-        margin: 64px auto 32px;
-        padding: 0 32px;
+        max-width: 1120px;
+        margin: 56px auto 32px;
+        padding: 0 24px;
       }
       .section-heading {
         text-align: center;
-        margin-bottom: 44px;
+        margin-bottom: 36px;
       }
       .section-heading h2 {
-        font-size: 34px;
+        font-size: 32px;
         font-weight: 700;
-        letter-spacing: -0.028em;
+        letter-spacing: -0.025em;
         line-height: 1.15;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #ffffff;
       }
       .section-heading p {
-        font-size: 16px;
+        font-size: 15.5px;
         color: var(--color-text-body);
       }
 
       .features-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
       }
       .feature-card {
         background: var(--surface-tile-graphite);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
         border: 1px solid var(--border-subtle);
-        border-radius: 24px;
-        padding: 32px 28px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        border-radius: 20px;
+        padding: 28px 24px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       }
       .feature-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(255, 69, 0, 0.4);
-        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 69, 0, 0.15);
+        transform: translateY(-3px);
+        border-color: rgba(255, 69, 0, 0.35);
+        box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5), 0 0 16px rgba(255, 69, 0, 0.12);
       }
       .card-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        background: rgba(255, 69, 0, 0.15);
-        border: 1px solid rgba(255, 120, 0, 0.3);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(255, 69, 0, 0.12);
+        border: 1px solid rgba(255, 120, 0, 0.25);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
         color: #ff9000;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
-        margin-bottom: 20px;
+        font-size: 20px;
+        margin-bottom: 16px;
       }
       .feature-card h3 {
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         color: #ffffff;
         letter-spacing: -0.01em;
       }
       .feature-card p {
-        font-size: 14.5px;
-        line-height: 1.55;
+        font-size: 14px;
+        line-height: 1.5;
         color: var(--color-text-body);
       }
 
       /* Sección FAQ */
       .faq-section {
-        max-width: 960px;
-        margin: 56px auto 64px;
-        padding: 0 32px;
+        max-width: 900px;
+        margin: 48px auto 56px;
+        padding: 0 24px;
       }
       .faq-list {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 14px;
       }
       .faq-item {
         background: var(--surface-tile-graphite);
         border: 1px solid var(--border-subtle);
-        border-radius: 18px;
-        padding: 24px 26px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 22px 24px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
       }
       .faq-item h3 {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 600;
         color: #ffffff;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
       .faq-item p {
-        font-size: 14.5px;
-        line-height: 1.55;
+        font-size: 14px;
+        line-height: 1.5;
         color: var(--color-text-body);
       }
 
-      /* Sección Casos de Uso (SEO & Intención de Búsqueda) */
+      /* Sección Casos de Uso (SEO) */
       .usecases-section {
-        max-width: 1200px;
-        margin: 48px auto 20px;
-        padding: 0 32px;
+        max-width: 1120px;
+        margin: 40px auto 20px;
+        padding: 0 24px;
       }
       .usecases-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
       }
       .usecase-card {
         background: var(--surface-tile-graphite);
         border: 1px solid var(--border-subtle);
-        border-radius: 20px;
-        padding: 26px 22px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 22px 20px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         transition: border-color 0.2s ease, transform 0.2s ease;
       }
       .usecase-card:hover {
-        border-color: rgba(212, 0, 120, 0.4);
+        border-color: rgba(212, 0, 120, 0.35);
         transform: translateY(-2px);
       }
       .usecase-card h4 {
         color: #ffffff;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
         gap: 8px;
       }
       .usecase-card p {
         color: var(--color-text-body);
-        font-size: 14px;
-        line-height: 1.5;
+        font-size: 13.5px;
+        line-height: 1.45;
       }
 
-      /* Footer de la Landing con Enlaces Internos SEO */
+      /* Footer */
       .landing-footer {
-        padding: 56px 32px 32px;
+        padding: 48px 24px 28px;
         border-top: 1px solid var(--border-subtle);
         color: var(--color-text-muted);
         background: var(--surface-void);
         margin-top: auto;
       }
       .footer-grid {
-        max-width: 1200px;
+        max-width: 1120px;
         margin: 0 auto;
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
-        gap: 40px;
+        gap: 36px;
         text-align: left;
-        margin-bottom: 40px;
+        margin-bottom: 36px;
       }
       @media (max-width: 840px) {
         .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -847,47 +869,46 @@
       }
       .footer-col h4 {
         color: #ffffff;
-        font-size: 14px;
+        font-size: 13.5px;
         font-weight: 600;
-        margin-bottom: 16px;
-        letter-spacing: -0.01em;
+        margin-bottom: 14px;
       }
       .footer-col ul {
         list-style: none;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 9px;
       }
       .footer-col a {
         color: var(--color-text-body);
         text-decoration: none;
-        font-size: 13.5px;
-        transition: color 0.2s ease;
+        font-size: 13px;
+        transition: color 0.15s ease;
       }
       .footer-col a:hover {
-        color: #ff9000;
+        color: #ffaa40;
       }
       .footer-brand p {
-        font-size: 13.5px;
-        line-height: 1.6;
+        font-size: 13px;
+        line-height: 1.55;
         color: var(--color-text-body);
-        max-width: 340px;
-        margin-top: 10px;
+        max-width: 320px;
+        margin-top: 8px;
       }
       .footer-bottom {
-        max-width: 1200px;
+        max-width: 1120px;
         margin: 0 auto;
-        padding-top: 24px;
+        padding-top: 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.06);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
-        font-size: 12.5px;
+        gap: 12px;
+        font-size: 12px;
       }
       .footer-bottom a {
-        color: #ff9000;
+        color: #ffaa40;
         text-decoration: none;
       }
       .footer-bottom a:hover {
@@ -906,16 +927,16 @@
         background: var(--surface-frosted);
         backdrop-filter: blur(16px);
         color: #ffffff;
-        padding: 9px 18px;
+        padding: 8px 16px;
         border-radius: 9999px;
-        font-size: 13px;
+        font-size: 12.5px;
         font-weight: 500;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         border: 1px solid var(--border-subtle);
       }
       .loader-spinner {
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-top-color: #ff4500;
         border-radius: 50%;
@@ -963,10 +984,10 @@
       }
 
       @media (max-width: 640px) {
-        .landing-nav { padding: 10px 14px; }
-        .hero-title { font-size: 36px; }
-        .hero-description { font-size: 15px; }
-        .dropzone-card { padding: 32px 20px; }
+        .landing-nav { padding: 8px 12px; }
+        .hero-title { font-size: 32px; }
+        .hero-description { font-size: 14.5px; }
+        .dropzone-card { padding: 28px 16px; }
       }
     </style>
   </head>
@@ -983,28 +1004,28 @@
     <!-- Landing Page Semántica e Indexable por Googlebot -->
     <main id="landing-view">
       <!-- Canvas 3D de Three.js (Efecto Ambiental de Partículas y Profundidad) -->
-      <canvas id="three-canvas"></canvas>
+      
 
       <div class="landing-content">
-        <!-- Barra de Navegación Flotante Estilo Apple -->
+                <!-- Barra de Navegación Flotante Estilo Apple -->
         <div class="nav-wrapper">
           <header class="landing-nav">
             <a href="#" class="brand-group" onclick="location.reload(); return false;">
               <img src="/brand-logo.svg" alt="Logotipo Vértice PDF" class="brand-logo-img" />
-              <span class="brand-title">Vértice PDF <span>Editor</span></span>
+              <span class="brand-title">Vértice PDF</span>
             </a>
             <div class="nav-actions">
-              <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener noreferrer" class="btn-github-nav" title="Código 100% abierto y auditable en GitHub">
+              <div class="badge-privacy">
+                <span class="pulse-dot"></span>
+                <span>100% Local · RAM</span>
+              </div>
+              <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener noreferrer" class="btn-github-nav" title="Código 100% abierto en GitHub">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
                 </svg>
-                <span>Código Auditable</span>
+                <span>GitHub</span>
                 <span class="gh-star-badge">⭐ Star</span>
               </a>
-              <div class="badge-privacy" title="Tus documentos nunca tocan ningún servidor. Abre la pestaña Network (F12) o desconecta el WiFi y verás 0 peticiones de red.">
-                <span class="pulse-dot"></span>
-                <span>Modo Local (0 Red)</span>
-              </div>
               <button class="btn-ghost-nav" onclick="window.enterWorkspace();">
                 <span>Ir al Editor</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1015,75 +1036,104 @@
           </header>
         </div>
 
-        <!-- Hero Section -->
+        <!-- Hero Section Organizada -->
         <section class="hero-section">
+          <!-- Objeto 3D Oficial de Marca (Limpio, Nítido, Sin Confeti) -->
+          <div class="hero-3d-stage" title="Vértice Codeium">
+            <canvas id="hero-3d-canvas" width="130" height="130"></canvas>
+          </div>
+
           <div class="hero-eyebrow">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
-            Editor de PDF Profesional • Cero Telemetría • 100% Gratis
+            <span class="eyebrow-dot"></span>
+            SUITE PROFESIONAL DE PDF · CERO TELEMETRÍA · 100% GRATIS
           </div>
           
           <h1 class="hero-title">
             Editor de PDF Online
-            <span class="gradient-text">Rápido, Libre y 100% Privado</span>
+            <span class="gradient-text">Rápido, Seguro y 100% Privado</span>
           </h1>
 
           <p class="hero-description">
-            Abre, visualiza, edita texto e imágenes, firma documentos y resalta formularios interactivos con fidelidad milimétrica. Sin suscripciones, sin registros y sin enviar tus documentos a ningún servidor.
+            Abre, edita texto e imágenes, firma documentos y resalta formularios con precisión milimétrica. Todo se procesa directamente en tu navegador sin subir archivos a ningún servidor.
           </p>
 
-          <!-- Tarjeta Interactiva de Apertura (Dropzone Rediseñada con Glassmorphism) -->
+          <!-- Tarjeta de Apertura / Dropzone -->
           <div class="drop-card-container">
             <div class="dropzone-card" id="dropzone">
               <input type="file" id="file-input" accept=".pdf,application/pdf" style="display:none;" />
               
               <div class="icon-doc-floating">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                   <polyline points="14 2 14 8 20 8"/>
-                  <line x1="16" y1="13" x2="8" y2="13"/>
-                  <line x1="16" y1="17" x2="8" y2="17"/>
-                  <polyline points="10 9 9 9 8 9"/>
+                  <line x1="12" y1="18" x2="12" y2="12"/>
+                  <line x1="9" y1="15" x2="15" y2="15"/>
                 </svg>
               </div>
 
               <button class="btn-open-pdf" onclick="document.getElementById('file-input').click();">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
                   <path d="M12 10v6m-3-3 3-3 3 3"/>
                 </svg>
-                Abrir PDF
+                <span>Seleccionar o Abrir PDF</span>
               </button>
 
-              <p class="dropzone-subtitle">o arrastra y suelta tu archivo PDF aquí</p>
+              <p class="dropzone-subtitle">o arrastra tu documento PDF aquí</p>
               
               <div class="drop-meta-row">
-                <span>🛡️ Memoria RAM Local</span>
-                <span>•</span>
-                <span>⚡ Hasta 100MB por archivo</span>
-                <span>•</span>
-                <span>🔒 Cero Nube</span>
+                <span>🔒 100% Memoria RAM</span>
+                <span class="meta-sep">·</span>
+                <span>⚡ Hasta 100 MB</span>
+                <span class="meta-sep">·</span>
+                <span>🛡️ Cero Almacenamiento en Nube</span>
               </div>
             </div>
           </div>
 
-          <!-- Chips de Herramientas con Enlaces Semánticos para Googlebot -->
-          <nav class="feature-chips" aria-label="Herramientas destacadas">
-            <a href="/editar-texto-pdf/" class="chip" title="Editar texto de PDF online gratis">✏️ Editar Texto</a>
-            <a href="/firmar-pdf-online/" class="chip" title="Firmar PDF online gratis y seguro">✒️ Firma Digital (E-Sign)</a>
-            <a href="/unir-pdf/" class="chip" title="Unir y combinar archivos PDF online">📑 Unir y Combinar PDF</a>
-            <span class="chip">🖼️ Imágenes con 8 Puntos</span>
-            <span class="chip">📝 Formularios Interactivos</span>
-            <span class="chip">👁️ Visor HD Nativo</span>
-          </nav>
-
-          <!-- Banner de Confianza / Modo Avión -->
-          <div class="trust-banner">
-            <span class="trust-icon">✈️</span>
-            <div class="trust-text">
-              <strong>Modo Avión Compatible:</strong> Todo el procesamiento corre dentro de tu navegador con WebAssembly. Puedes desconectar el WiFi tras cargar o inspeccionar la pestaña Red (F12): 0 llamadas a servidores externos.
+          <!-- Muestra Organizada de Herramientas (4 Columnas Simétricas) -->
+          <div class="tools-showcase" aria-label="Herramientas Principales">
+            <div class="tools-grid">
+              <a href="/firmar-pdf-online/" class="tool-tile">
+                <span class="tool-tile-icon">✍️</span>
+                <div class="tool-tile-content">
+                  <span class="tool-tile-title">Firmar PDF</span>
+                  <span class="tool-tile-desc">Rúbrica digital y certificados</span>
+                </div>
+              </a>
+              <a href="/unir-pdf/" class="tool-tile">
+                <span class="tool-tile-icon">📑</span>
+                <div class="tool-tile-content">
+                  <span class="tool-tile-title">Unir PDF</span>
+                  <span class="tool-tile-desc">Combinar y fusionar páginas</span>
+                </div>
+              </a>
+              <a href="/editar-texto-pdf/" class="tool-tile">
+                <span class="tool-tile-icon">✏️</span>
+                <div class="tool-tile-content">
+                  <span class="tool-tile-title">Editar Texto</span>
+                  <span class="tool-tile-desc">Modificar párrafos y tipografía</span>
+                </div>
+              </a>
+              <div class="tool-tile" onclick="document.getElementById('file-input').click();">
+                <span class="tool-tile-icon">📋</span>
+                <div class="tool-tile-content">
+                  <span class="tool-tile-title">Formularios</span>
+                  <span class="tool-tile-desc">Rellenar campos interactivos</span>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <!-- Banner de Confianza y Modo Avión Cohesivo -->
+          <div class="trust-banner">
+            <div class="trust-badge">
+              <span>✈️</span>
+              <span>Modo Avión Compatible</span>
+            </div>
+            <p class="trust-text">
+              Todo el procesamiento se ejecuta en <strong>WebAssembly local</strong>. Puedes desconectar Internet tras cargar la app y seguirá funcionando con total seguridad.
+            </p>
             <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener noreferrer" class="trust-link">
               Auditar Código →
             </a>
@@ -1225,59 +1275,35 @@
       <button class="btn-show-landing" onclick="window.showLanding();">Inicio / Info</button>
     </div>
 
-        <!-- Script de Animación 3D Ambiental con Three.js, GLTFLoader y Vértice Kinetic Flame -->
+            <!-- Script de Animación 3D para el Logo Oficial Vértice (Nítido, Elegante, Sin Confeti) -->
     <script>
       let threeAnimId = null;
-      (function initThreeBackground() {
-        const canvas = document.getElementById("three-canvas");
+      (function initThreeLogo() {
+        const canvas = document.getElementById("hero-3d-canvas");
         if (!canvas || typeof THREE === "undefined") return;
 
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 240;
+        const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+        camera.position.set(0, 0, 4.6);
 
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(130, 130, false);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        function getFrustumBounds() {
-          const vFOV = THREE.MathUtils.degToRad(camera.fov);
-          const visibleHeight = 2 * Math.tan(vFOV / 2) * camera.position.z;
-          const visibleWidth = visibleHeight * (window.innerWidth / window.innerHeight);
-          return {
-            halfW: visibleWidth * 0.65,
-            halfH: visibleHeight * 0.65,
-            halfZ: 140
-          };
-        }
-
-        let bounds = getFrustumBounds();
-
-        function resizeRenderer() {
-          const w = window.innerWidth;
-          const h = window.innerHeight;
-          camera.aspect = w / h;
-          camera.updateProjectionMatrix();
-          renderer.setSize(w, h, false);
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-          bounds = getFrustumBounds();
-        }
-
-        resizeRenderer();
-        window.addEventListener("resize", resizeRenderer);
-
-        // Iluminación Espectral Fuego (Solar Spark, Thermal Blaze, Magenta Core, Electric Violet)
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+        // Luces espectrales Vértice Flame
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
 
         const sunLight = new THREE.DirectionalLight(0xffdd00, 1.8);
-        sunLight.position.set(60, 100, 90);
+        sunLight.position.set(3, 4, 3);
         scene.add(sunLight);
 
-        const magentaLight = new THREE.PointLight(0xd40078, 2.4, 500);
-        magentaLight.position.set(-90, 20, 70);
+        const magentaLight = new THREE.PointLight(0xd40078, 2.2, 20);
+        magentaLight.position.set(-3, -2, 2);
         scene.add(magentaLight);
 
-        const violetLight = new THREE.PointLight(0x6014e4, 2.6, 600);
-        violetLight.position.set(90, -40, 50);
+        const violetLight = new THREE.PointLight(0x6014e4, 2.5, 20);
+        violetLight.position.set(0, -3, -2);
         scene.add(violetLight);
 
         // Material con Shader Inyectado para Gradiente Espectral Fuego
@@ -1329,9 +1355,7 @@
           return material;
         }
 
-        // Grupo del Objeto 3D de Marca
         const brandGroup = new THREE.Group();
-        brandGroup.position.set(0, 10, -20);
         scene.add(brandGroup);
 
         // Fallback: Extrusión Vectorial Directa del Isotipo
@@ -1363,11 +1387,10 @@
           });
           geo.center();
           const mesh = new THREE.Mesh(geo, createFlameShaderMaterial());
-          mesh.scale.set(16, 16, 16);
+          mesh.scale.set(0.72, 0.72, 0.72);
           brandGroup.add(mesh);
         }
 
-        // Cargar el modelo 3D oficial .glb
         if (typeof THREE.GLTFLoader !== "undefined") {
           const loader = new THREE.GLTFLoader();
           loader.load(
@@ -1381,7 +1404,7 @@
                   child.receiveShadow = true;
                 }
               });
-              gltf.scene.scale.set(24, 24, 24);
+              gltf.scene.scale.set(1.0, 1.0, 1.0);
               brandGroup.add(gltf.scene);
             },
             undefined,
@@ -1394,52 +1417,6 @@
           setupFallbackMesh();
         }
 
-        // Nube de partículas espectral envolvente (260 partículas con colores Fuego)
-        const particleCount = 260;
-        const pGeo = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        const velocities = [];
-
-        // Paleta de partículas: Solar Spark, Thermal Blaze, Magenta Core, Electric Violet
-        const palette = [
-          [1.0, 0.867, 0.0],   // #FFDD00
-          [1.0, 0.271, 0.0],   // #FF4500
-          [0.831, 0.0, 0.471], // #D40078
-          [0.376, 0.078, 0.894]// #6014E4
-        ];
-
-        for (let i = 0; i < particleCount; i++) {
-          positions[i * 3] = (Math.random() - 0.5) * (bounds.halfW * 2);
-          positions[i * 3 + 1] = (Math.random() - 0.5) * (bounds.halfH * 2);
-          positions[i * 3 + 2] = (Math.random() - 0.5) * (bounds.halfZ * 2);
-
-          const col = palette[Math.floor(Math.random() * palette.length)];
-          colors[i * 3] = col[0];
-          colors[i * 3 + 1] = col[1];
-          colors[i * 3 + 2] = col[2];
-
-          velocities.push({
-            x: (Math.random() - 0.5) * 0.18,
-            y: (Math.random() - 0.5) * 0.18,
-            z: (Math.random() - 0.5) * 0.10
-          });
-        }
-
-        pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-        const pMat = new THREE.PointsMaterial({
-          size: 3.2,
-          vertexColors: true,
-          transparent: true,
-          opacity: 0.75,
-          blending: THREE.AdditiveBlending
-        });
-
-        const particles = new THREE.Points(pGeo, pMat);
-        scene.add(particles);
-
         const timer = new THREE.Clock();
 
         function animate() {
@@ -1447,27 +1424,10 @@
           const delta = timer.getDelta();
           const elapsed = timer.getElapsedTime();
 
-          // Rotación y flotación suave del objeto 3D de marca (serena, sin reaccionar bruscamente)
-          brandGroup.rotation.y += delta * 0.45;
-          brandGroup.position.y = 10 + Math.sin(elapsed * 1.2) * 3;
-          brandGroup.rotation.x = Math.sin(elapsed * 0.7) * 0.08;
-          brandGroup.rotation.z = Math.cos(elapsed * 0.5) * 0.04;
-
-          // Deriva sutil de la nube de partículas
-          particles.rotation.y += delta * 0.025;
-          particles.rotation.x = Math.sin(elapsed * 0.2) * 0.03;
-
-          const pos = pGeo.attributes.position.array;
-          for (let i = 0; i < particleCount; i++) {
-            pos[i * 3] += velocities[i].x;
-            pos[i * 3 + 1] += velocities[i].y;
-            pos[i * 3 + 2] += velocities[i].z;
-
-            if (Math.abs(pos[i * 3]) > bounds.halfW) velocities[i].x *= -1;
-            if (Math.abs(pos[i * 3 + 1]) > bounds.halfH) velocities[i].y *= -1;
-            if (Math.abs(pos[i * 3 + 2]) > bounds.halfZ) velocities[i].z *= -1;
-          }
-          pGeo.attributes.position.needsUpdate = true;
+          // Rotación elegante y suave 360 grados continua
+          brandGroup.rotation.y += delta * 0.55;
+          brandGroup.position.y = Math.sin(elapsed * 1.5) * 0.08;
+          brandGroup.rotation.x = Math.sin(elapsed * 0.8) * 0.06;
 
           renderer.render(scene, camera);
         }
