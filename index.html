@@ -598,11 +598,14 @@
       }
       .tools-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 12px;
       }
-      @media (max-width: 768px) {
+      @media (max-width: 820px) {
         .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 480px) {
+        .tools-grid { grid-template-columns: 1fr; }
       }
       .tool-tile {
         background: var(--surface-tile-graphite);
@@ -1068,6 +1071,282 @@
       .btn-sig-download:hover {
         background: linear-gradient(180deg, #2e2e42 0%, #1c1c2b 100%);
         transform: translateY(-1px);
+      }
+
+      /* ==========================================================================
+         Buscador de Comandos (Ctrl + K) & Navegación Spotlight
+         ========================================================================== */
+      .nav-search-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-subtle);
+        border-radius: 9999px;
+        color: #94a3b8;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .nav-search-pill:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 69, 0, 0.35);
+        color: #ffffff;
+      }
+      .kbd-badge {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        padding: 2px 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 6px;
+        color: #ffaa40;
+      }
+
+      /* Command Palette Modal */
+      .cmd-palette-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100005;
+        background: rgba(4, 4, 6, 0.84);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: none;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 12vh 16px 20px;
+        opacity: 0;
+        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .cmd-palette-backdrop.active {
+        opacity: 1;
+      }
+      .cmd-palette-window {
+        width: 100%;
+        max-width: 560px;
+        background: linear-gradient(180deg, #161622 0%, #0d0d14 100%);
+        border: 1px solid rgba(255, 69, 0, 0.35);
+        border-radius: 20px;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 24px 60px -10px rgba(0, 0, 0, 0.9),
+          0 0 50px -10px rgba(255, 69, 0, 0.3);
+        overflow: hidden;
+        transform: scale(0.96) translateY(-10px);
+        transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .cmd-palette-backdrop.active .cmd-palette-window {
+        transform: scale(1) translateY(0);
+      }
+      .cmd-search-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .cmd-search-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        color: #ffffff;
+        font-family: inherit;
+      }
+      .cmd-search-input::placeholder {
+        color: #64748b;
+      }
+      .cmd-results-list {
+        max-height: 380px;
+        overflow-y: auto;
+        padding: 12px;
+        list-style: none;
+      }
+      .cmd-group-label {
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #64748b;
+        padding: 8px 12px 4px;
+        text-align: left;
+      }
+      .cmd-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.12s ease;
+        color: #cbd5e1;
+        text-align: left;
+      }
+      .cmd-item:hover, .cmd-item.selected {
+        background: rgba(255, 69, 0, 0.15);
+        color: #ffffff;
+        border: 1px solid rgba(255, 69, 0, 0.3);
+        transform: translateX(2px);
+      }
+      .cmd-item-icon {
+        font-size: 18px;
+        width: 26px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .cmd-item-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .cmd-item-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        display: block;
+      }
+      .cmd-item-desc {
+        font-size: 11px;
+        color: #94a3b8;
+        display: block;
+      }
+      .cmd-item-tag {
+        font-size: 10.5px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #ffaa40;
+        flex-shrink: 0;
+      }
+      .cmd-footer-bar {
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.4);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #64748b;
+      }
+
+      /* Segmented Mode Dock */
+      .mode-segmented-dock {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-subtle);
+        border-radius: 9999px;
+        margin-bottom: 20px;
+        max-width: 100%;
+        overflow-x: auto;
+      }
+      .mode-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 16px;
+        border-radius: 9999px;
+        font-size: 12.5px;
+        font-weight: 500;
+        color: #94a3b8;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.16s ease;
+        white-space: nowrap;
+      }
+      .mode-tab:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .mode-tab.active {
+        color: #ffffff;
+        background: linear-gradient(180deg, #242433 0%, #151520 100%);
+        border: 1px solid rgba(255, 69, 0, 0.4);
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          0 4px 12px rgba(255, 69, 0, 0.2);
+        font-weight: 600;
+      }
+
+      /* Manifiesto Anti-Suscripción */
+      .anti-paywall-manifesto {
+        max-width: 980px;
+        margin: 48px auto 32px;
+        padding: 36px 32px;
+        background: linear-gradient(180deg, rgba(20, 20, 30, 0.8) 0%, rgba(12, 12, 18, 0.95) 100%);
+        border: 1px solid rgba(255, 220, 0, 0.25);
+        border-radius: 24px;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 20px 50px -10px rgba(0, 0, 0, 0.8);
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+      }
+      .anti-paywall-manifesto::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(255, 220, 0, 0.12) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .manifesto-badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #ffd43f;
+        background: rgba(255, 220, 0, 0.1);
+        border: 1px solid rgba(255, 220, 0, 0.3);
+        padding: 4px 12px;
+        border-radius: 9999px;
+        margin-bottom: 12px;
+      }
+      .anti-paywall-manifesto h3 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.025em;
+        margin-bottom: 12px;
+      }
+      .anti-paywall-manifesto p {
+        font-size: 14.5px;
+        line-height: 1.6;
+        color: #94a3b8;
+        margin-bottom: 14px;
+        max-width: 820px;
+      }
+      .anti-paywall-manifesto strong {
+        color: #ffffff;
+      }
+      .manifesto-signatures-row {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .manifesto-check {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        padding: 5px 12px;
+        border-radius: 9999px;
       }
 
       /* Bento Grid de Características */
@@ -1705,6 +1984,90 @@
       </div>
     </div>
 
+    <!-- Command Palette (Spotlight / Raycast Ctrl + K) -->
+    <div id="cmd-palette-backdrop" class="cmd-palette-backdrop" role="dialog" aria-modal="true" aria-label="Buscador de comandos">
+      <div class="cmd-palette-window" id="cmd-palette-window">
+        <div class="cmd-search-bar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffaa40" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="cmd-search-input" 
+            class="cmd-search-input" 
+            placeholder="Escribe un comando o busca una herramienta..." 
+            autocomplete="off" 
+            spellcheck="false"
+          />
+          <span class="kbd-badge">ESC para salir</span>
+        </div>
+        <ul class="cmd-results-list" id="cmd-results-list">
+          <div class="cmd-group-label">Herramientas Populares</div>
+          <li class="cmd-item selected" data-action="sign">
+            <span class="cmd-item-icon">✍️</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Firmar Documento PDF</span>
+              <span class="cmd-item-desc">Rúbrica digital biométrica, certificados y firmas electrónicas</span>
+            </div>
+            <span class="cmd-item-tag">Firma</span>
+          </li>
+          <li class="cmd-item" data-action="sanitize">
+            <span class="cmd-item-icon">🧹</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Sanitizar Privacidad & Metadatos (Cero Rastro)</span>
+              <span class="cmd-item-desc">Eliminar historial de revisiones, autor, geolocalización y datos ocultos</span>
+            </div>
+            <span class="cmd-item-tag">Zero-Trace</span>
+          </li>
+          <li class="cmd-item" data-action="compress">
+            <span class="cmd-item-icon">📦</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Comprimir PDF Inteligente (< 5MB)</span>
+              <span class="cmd-item-desc">Optimizar streams y gráficos para envíos por correo y portales</span>
+            </div>
+            <span class="cmd-item-tag">Rápido</span>
+          </li>
+          <li class="cmd-item" data-action="merge">
+            <span class="cmd-item-icon">📑</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Unir & Combinar Múltiples PDFs</span>
+              <span class="cmd-item-desc">Fusionar archivos o reorganizar orden de páginas</span>
+            </div>
+            <span class="cmd-item-tag">Páginas</span>
+          </li>
+          <li class="cmd-item" data-action="edit">
+            <span class="cmd-item-icon">✏️</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Editar Texto & Tipografía</span>
+              <span class="cmd-item-desc">Modificar párrafos, añadir títulos y cambiar formato</span>
+            </div>
+            <span class="cmd-item-tag">Editor</span>
+          </li>
+          <li class="cmd-item" data-action="forms">
+            <span class="cmd-item-icon">📋</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Rellenar Formularios Interactivos</span>
+              <span class="cmd-item-desc">Completar casillas, texto AcroForm y campos oficiales</span>
+            </div>
+            <span class="cmd-item-tag">Formularios</span>
+          </li>
+          <li class="cmd-item" data-action="editor">
+            <span class="cmd-item-icon">⚡</span>
+            <div class="cmd-item-content">
+              <span class="cmd-item-title">Entrar Directo al Espacio de Trabajo</span>
+              <span class="cmd-item-desc">Lienzo completo del visor WebAssembly a 60 FPS</span>
+            </div>
+            <span class="cmd-item-tag">WASM</span>
+          </li>
+        </ul>
+        <div class="cmd-footer-bar">
+          <span>Usa <strong style="color: #cbd5e1;">↑ ↓</strong> para navegar y <strong style="color: #cbd5e1;">Enter</strong> para ejecutar</span>
+          <span>Presiona <strong style="color: #cbd5e1;">Ctrl + K</strong> en cualquier momento</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Canvas de egui / WebAssembly -->
     <canvas id="pdfcraft"></canvas>
 
@@ -1721,6 +2084,14 @@
               <img src="/brand-logo.svg" alt="Logotipo Vértice PDF" class="brand-logo-img" />
               <span class="brand-title">Vértice PDF</span>
             </a>
+            <button class="nav-search-pill" onclick="openCmdPalette();" title="Buscador rápido de herramientas (Ctrl + K)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Buscar herramientas...</span>
+              <span class="kbd-badge">Ctrl K</span>
+            </button>
             <div class="nav-actions">
               <div class="badge-privacy">
                 <span class="pulse-dot"></span>
@@ -1798,6 +2169,16 @@
             </div>
           </div>
 
+          <!-- Selector de Modo de Trabajo Rápido -->
+          <div class="mode-segmented-dock" role="tablist" aria-label="Modos de trabajo rápido">
+            <button class="mode-tab active" data-mode="all" onclick="setStudioMode('all', this);">⚡ Todo en Uno</button>
+            <button class="mode-tab" data-mode="sign" onclick="setStudioMode('sign', this);">✍️ Firmar</button>
+            <button class="mode-tab" data-mode="sanitize" onclick="setStudioMode('sanitize', this);">🧹 Sanitizar Metadatos</button>
+            <button class="mode-tab" data-mode="compress" onclick="setStudioMode('compress', this);">📦 Comprimir (< 5MB)</button>
+            <button class="mode-tab" data-mode="merge" onclick="setStudioMode('merge', this);">📑 Unir</button>
+            <button class="mode-tab" data-mode="edit" onclick="setStudioMode('edit', this);">✏️ Editar Texto</button>
+          </div>
+
           <!-- Tarjeta de Apertura / Dropzone -->
           <div class="drop-card-container">
             <div class="dropzone-card" id="dropzone">
@@ -1817,10 +2198,10 @@
                   <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
                   <path d="M12 10v6m-3-3 3-3 3 3"/>
                 </svg>
-                <span>Seleccionar o Abrir PDF</span>
+                <span id="dropzone-btn-label">Seleccionar o Abrir PDF</span>
               </button>
 
-              <p class="dropzone-subtitle">o arrastra tu documento PDF aquí</p>
+              <p class="dropzone-subtitle" id="dropzone-sub-label">o arrastra tu documento PDF aquí</p>
               
               <div class="drop-meta-row">
                 <span>🔒 100% Memoria RAM</span>
@@ -1832,7 +2213,7 @@
             </div>
           </div>
 
-          <!-- Muestra Organizada de Herramientas (4 Columnas Simétricas) -->
+          <!-- Muestra Organizada de Herramientas (6 Bloques Simétricos de Alta Potencia) -->
           <div class="tools-showcase" aria-label="Herramientas Principales">
             <div class="tools-grid">
               <a href="/firmar-pdf-online/" class="tool-tile">
@@ -1842,6 +2223,13 @@
                   <span class="tool-tile-desc">Rúbrica digital y certificados</span>
                 </div>
               </a>
+              <div class="tool-tile" onclick="setStudioMode('sanitize'); openPdfModal(true);" title="Elimina historial, autor y metadatos EXIF">
+                <span class="tool-tile-icon">🧹</span>
+                <div class="tool-tile-content">
+                  <span class="tool-tile-title">Sanitizar Metadatos</span>
+                  <span class="tool-tile-desc">Cero rastro confidencial</span>
+                </div>
+              </div>
               <a href="/unir-pdf/" class="tool-tile">
                 <span class="tool-tile-icon">📑</span>
                 <div class="tool-tile-content">
@@ -1849,6 +2237,13 @@
                   <span class="tool-tile-desc">Combinar y fusionar páginas</span>
                 </div>
               </a>
+              <div class="tool-tile" onclick="setStudioMode('compress'); openPdfModal(true);" title="Reduce el peso para envíos y portales oficiales">
+                <span class="tool-tile-icon">📦</span>
+                <div class="tool-tile-content">
+                  <span class="tool-tile-title">Comprimir PDF</span>
+                  <span class="tool-tile-desc">Optimización &lt; 5MB en RAM</span>
+                </div>
+              </div>
               <a href="/editar-texto-pdf/" class="tool-tile">
                 <span class="tool-tile-icon">✏️</span>
                 <div class="tool-tile-content">
@@ -1983,6 +2378,26 @@
                 </li>
               </ul>
             </div>
+          </div>
+        </section>
+
+        <!-- Manifiesto Anti-Suscripción / Anti-Bait-and-Switch -->
+        <section class="anti-paywall-manifesto">
+          <span class="manifesto-badge">MANIFIESTO CONTRA EL SECUESTRO DE ARCHIVOS</span>
+          <h3>¿Cansado de editar 20 páginas para que te cobren $18 al descargar?</h3>
+          <p>
+            En los foros de <strong>Reddit</strong> (r/software, r/privacy) y <strong>Hacker News</strong>, la queja más amarga y repetida sobre editores de PDF es el <em>bait-and-switch</em>:
+            <em>"Pasé 40 minutos rellenando un formulario o corrigiendo un contrato, y al hacer clic en 'Descargar' me bloquearon el archivo pidiéndome tarjeta de crédito".</em>
+          </p>
+          <p>
+            <strong>En Vértice PDF la filosofía es soberana y transparente:</strong> El software corre al 100% en tu propio navegador vía WebAssembly compilado desde Rust. Como no gastamos recursos en servidores de renderizado centralizados, <strong>tu archivo jamás queda como rehén</strong>, no hay muros de pago al descargar y no necesitas registrarte ni pagar suscripciones mensuales para guardar tu propio trabajo.
+          </p>
+          <div class="manifesto-signatures-row">
+            <span class="manifesto-check">✓ Cero Paywalls sorpresa</span>
+            <span class="manifesto-check">✓ Sin marcas de agua forzadas</span>
+            <span class="manifesto-check">✓ Descargas ilimitadas</span>
+            <span class="manifesto-check">✓ Sin tarjeta de crédito</span>
+            <span class="manifesto-check">✓ Código Abierto en GitHub</span>
           </div>
         </section>
 
@@ -2399,6 +2814,201 @@
         const loader = document.getElementById("micro-loader");
         if (loader) loader.style.display = "none";
       }
+
+      // ==========================================================================
+      // Modos de Estudio Segmentados (Firmar, Sanitizar, Comprimir, Unir, Editar)
+      // ==========================================================================
+      let currentStudioMode = "all";
+      const studioModeConfigs = {
+        all: {
+          title: "Abre tu archivo PDF",
+          subtitle: "o arrastra tu documento PDF aquí",
+          btnLabel: "Seleccionar o Abrir PDF",
+          modalDesc: "Procesamiento seguro 100% en memoria RAM local · Sin subir datos a ningún servidor"
+        },
+        sign: {
+          title: "Firmar Documento PDF",
+          subtitle: "o arrastra el documento que deseas firmar aquí",
+          btnLabel: "Firmar PDF sin Nube",
+          modalDesc: "Firma biométrica y rúbrica digital · 100% privado en tu hardware local"
+        },
+        sanitize: {
+          title: "Sanitizador de Privacidad (Cero Rastro)",
+          subtitle: "o arrastra el archivo para eliminar metadatos, autor y revisiones",
+          btnLabel: "Sanitizar PDF sin Nube",
+          modalDesc: "Elimina metadatos ocultos, scripts, miniaturas e información previa confidencial"
+        },
+        compress: {
+          title: "Compresión Inteligente (< 5MB)",
+          subtitle: "o arrastra tu PDF pesado para reducir su peso al instante",
+          btnLabel: "Comprimir PDF en RAM",
+          modalDesc: "Optimiza flujos y fuentes sin pérdida perceptible para correo y juzgados"
+        },
+        merge: {
+          title: "Unir y Combinar PDFs",
+          subtitle: "o arrastra los archivos que deseas combinar",
+          btnLabel: "Unir Archivos PDF",
+          modalDesc: "Combina páginas de múltiples documentos de forma instantánea y local"
+        },
+        edit: {
+          title: "Editor de Texto y Contenido",
+          subtitle: "o arrastra el PDF para editar párrafos e imágenes",
+          btnLabel: "Editar PDF en RAM",
+          modalDesc: "Modifica contenido existente con precisión tipográfica milimétrica"
+        }
+      };
+
+      window.setStudioMode = function(mode, el) {
+        currentStudioMode = mode;
+        const config = studioModeConfigs[mode] || studioModeConfigs.all;
+        
+        document.querySelectorAll(".mode-tab").forEach(tab => {
+          if (tab.getAttribute("data-mode") === mode) {
+            tab.classList.add("active");
+          } else {
+            tab.classList.remove("active");
+          }
+        });
+
+        const dropBtnLabel = document.getElementById("dropzone-btn-label");
+        const dropSubLabel = document.getElementById("dropzone-sub-label");
+        const modalTitle = document.getElementById("modal-title-text");
+        const modalDesc = document.getElementById("modal-desc-text");
+
+        if (dropBtnLabel) dropBtnLabel.textContent = config.btnLabel;
+        if (dropSubLabel) dropSubLabel.textContent = config.subtitle;
+        if (modalTitle) modalTitle.textContent = config.title;
+        if (modalDesc) modalDesc.textContent = config.modalDesc;
+      };
+
+      // ==========================================================================
+      // Command Palette (Ctrl + K / Cmd + K) Logic
+      // ==========================================================================
+      const cmdBackdrop = document.getElementById("cmd-palette-backdrop");
+      const cmdInput = document.getElementById("cmd-search-input");
+      const cmdList = document.getElementById("cmd-results-list");
+
+      function openCmdPalette() {
+        if (!cmdBackdrop) return;
+        cmdBackdrop.style.display = "flex";
+        void cmdBackdrop.offsetWidth;
+        cmdBackdrop.classList.add("active");
+        if (cmdInput) {
+          cmdInput.value = "";
+          cmdInput.focus();
+        }
+        filterCmdItems("");
+      }
+
+      function closeCmdPalette() {
+        if (!cmdBackdrop) return;
+        cmdBackdrop.classList.remove("active");
+        setTimeout(() => {
+          cmdBackdrop.style.display = "none";
+        }, 200);
+      }
+
+      window.openCmdPalette = openCmdPalette;
+      window.closeCmdPalette = closeCmdPalette;
+
+      function executeCmdAction(action) {
+        closeCmdPalette();
+        if (action === "editor") {
+          window.enterWorkspace();
+        } else if (action && studioModeConfigs[action]) {
+          window.setStudioMode(action);
+          window.openPdfModal(true);
+        } else {
+          window.openPdfModal(true);
+        }
+      }
+
+      function filterCmdItems(query) {
+        if (!cmdList) return;
+        const q = query.toLowerCase().trim();
+        const items = cmdList.querySelectorAll(".cmd-item");
+        let firstMatch = null;
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (!q || text.includes(q)) {
+            item.style.display = "flex";
+            if (!firstMatch) firstMatch = item;
+          } else {
+            item.style.display = "none";
+          }
+          item.classList.remove("selected");
+        });
+        if (firstMatch) firstMatch.classList.add("selected");
+      }
+
+      if (cmdInput) {
+        cmdInput.addEventListener("input", (e) => {
+          filterCmdItems(e.target.value);
+        });
+
+        cmdInput.addEventListener("keydown", (e) => {
+          if (!cmdList) return;
+          const visibleItems = Array.from(cmdList.querySelectorAll('.cmd-item')).filter(i => i.style.display !== 'none');
+          if (!visibleItems.length) return;
+          let selectedIdx = visibleItems.findIndex(i => i.classList.contains('selected'));
+
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (selectedIdx >= 0) visibleItems[selectedIdx].classList.remove('selected');
+            selectedIdx = (selectedIdx + 1) % visibleItems.length;
+            visibleItems[selectedIdx].classList.add('selected');
+            visibleItems[selectedIdx].scrollIntoView({ block: 'nearest' });
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (selectedIdx >= 0) visibleItems[selectedIdx].classList.remove('selected');
+            selectedIdx = (selectedIdx - 1 + visibleItems.length) % visibleItems.length;
+            visibleItems[selectedIdx].classList.add('selected');
+            visibleItems[selectedIdx].scrollIntoView({ block: 'nearest' });
+          } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (selectedIdx >= 0) {
+              const action = visibleItems[selectedIdx].getAttribute("data-action");
+              executeCmdAction(action);
+            }
+          } else if (e.key === "Escape") {
+            closeCmdPalette();
+          }
+        });
+      }
+
+      if (cmdList) {
+        cmdList.addEventListener("click", (e) => {
+          const item = e.target.closest(".cmd-item");
+          if (item) {
+            const action = item.getAttribute("data-action");
+            executeCmdAction(action);
+          }
+        });
+      }
+
+      if (cmdBackdrop) {
+        cmdBackdrop.addEventListener("click", (e) => {
+          if (e.target === cmdBackdrop) {
+            closeCmdPalette();
+          }
+        });
+      }
+
+      // Atajo global Ctrl+K / Cmd+K
+      window.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
+          e.preventDefault();
+          if (cmdBackdrop && cmdBackdrop.classList.contains("active")) {
+            closeCmdPalette();
+          } else {
+            openCmdPalette();
+          }
+        } else if (e.key === "Escape") {
+          if (cmdBackdrop && cmdBackdrop.classList.contains("active")) {
+            closeCmdPalette();
+          }
+        }
+      });
 
       window.enterWorkspace = function() {
         if (typeof window.trackEvent === 'function') {
