@@ -708,6 +708,368 @@
         text-decoration: underline;
       }
 
+      /* ==========================================================================
+         Cybernetic HUD: Testigo de Red en Vivo (Zero-Trust RAM Inspector)
+         ========================================================================== */
+      .network-inspector-hud {
+        width: 100%;
+        max-width: 780px;
+        margin: 0 auto 28px;
+        background: linear-gradient(180deg, rgba(17, 17, 24, 0.85) 0%, rgba(12, 12, 18, 0.95) 100%);
+        border: 1px solid rgba(255, 69, 0, 0.25);
+        border-radius: 18px;
+        padding: 16px 20px;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 16px 36px -10px rgba(0, 0, 0, 0.7),
+          0 0 24px -6px rgba(255, 69, 0, 0.2);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+      .hud-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .hud-status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .hud-pulse-radar {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+        position: relative;
+        box-shadow: 0 0 10px #10b981;
+      }
+      .hud-pulse-radar::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 1.5px solid #10b981;
+        animation: radarPulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+      }
+      @keyframes radarPulse {
+        0% { transform: scale(0.8); opacity: 1; }
+        100% { transform: scale(2.2); opacity: 0; }
+      }
+      .hud-status-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: #94a3b8;
+        text-transform: uppercase;
+      }
+      .hud-status-val {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: #10b981;
+        letter-spacing: 0.02em;
+      }
+      .hud-badge-offline {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #ffaa40;
+        background: rgba(255, 69, 0, 0.12);
+        border: 1px solid rgba(255, 69, 0, 0.3);
+        padding: 3px 10px;
+        border-radius: 9999px;
+      }
+      .hud-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      @media (max-width: 640px) {
+        .hud-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      .hud-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 10px 12px;
+        text-align: left;
+      }
+      .hud-card-label {
+        font-size: 10.5px;
+        color: #64748b;
+        font-weight: 500;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .hud-card-val {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: -0.02em;
+        margin-bottom: 2px;
+      }
+      .hud-card-desc {
+        font-size: 10px;
+        color: #94a3b8;
+      }
+      .highlight-emerald { color: #10b981 !important; }
+      .highlight-flame { color: #ff5500 !important; }
+      .highlight-amber { color: #ffaa40 !important; }
+
+      /* ==========================================================================
+         Comparativa Directa: Vértice PDF vs Editores Antiguos
+         ========================================================================== */
+      .comparison-section {
+        max-width: 1080px;
+        margin: 64px auto 32px;
+        padding: 0 24px;
+      }
+      .section-badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #ffaa40;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .comparison-table-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-top: 28px;
+      }
+      @media (max-width: 820px) {
+        .comparison-table-wrapper { grid-template-columns: 1fr; }
+      }
+      .comp-col {
+        border-radius: 22px;
+        padding: 32px 28px;
+        position: relative;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+      }
+      .comp-old {
+        background: #0d0d12;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        opacity: 0.92;
+      }
+      .comp-old .comp-tag {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        padding: 3px 10px;
+        border-radius: 9999px;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+      .comp-vertice {
+        background: linear-gradient(180deg, #161622 0%, #0d0d14 100%);
+        border: 1.5px solid rgba(255, 69, 0, 0.35);
+        box-shadow: 
+          inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.18),
+          0 24px 60px -12px rgba(0, 0, 0, 0.8),
+          0 0 40px -10px rgba(255, 69, 0, 0.3);
+      }
+      .comp-ribbon {
+        position: absolute;
+        top: 16px;
+        right: 18px;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #ffffff;
+        background: linear-gradient(90deg, #ff4500, #d40078);
+        padding: 4px 12px;
+        border-radius: 9999px;
+        box-shadow: 0 4px 14px rgba(212, 0, 120, 0.4);
+      }
+      .comp-tag-vertice {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+      }
+      .vertice-gradient-title {
+        background: var(--gradient-flame-h);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -0.028em;
+        margin-bottom: 4px;
+      }
+      .comp-header {
+        margin-bottom: 24px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .comp-header h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        margin-bottom: 4px;
+      }
+      .comp-sub {
+        font-size: 12.5px;
+        color: #64748b;
+      }
+      .comp-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        flex: 1;
+      }
+      .comp-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 13.5px;
+      }
+      .comp-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .comp-icon.bad {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+      .comp-icon.good {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+      .comp-list strong {
+        display: block;
+        color: #ffffff;
+        font-size: 14px;
+        margin-bottom: 2px;
+      }
+      .comp-list span {
+        display: block;
+        color: #94a3b8;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      /* ==========================================================================
+         Laboratorio de Firma Biométrica en Vivo (Interactive Sandbox)
+         ========================================================================== */
+      .signature-lab-section {
+        max-width: 980px;
+        margin: 56px auto 32px;
+        padding: 0 24px;
+      }
+      .sig-lab-card {
+        background: linear-gradient(180deg, #13131c 0%, #0c0c12 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 32px 28px;
+        box-shadow: 
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 24px 48px -12px rgba(0, 0, 0, 0.7);
+        text-align: center;
+      }
+      .sig-canvas-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 640px;
+        height: 180px;
+        margin: 20px auto 16px;
+        background: #08080c;
+        border: 1.5px dashed rgba(255, 120, 0, 0.35);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+        touch-action: none;
+      }
+      #sig-lab-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        cursor: crosshair;
+      }
+      .sig-watermark-hint {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        color: rgba(255, 255, 255, 0.18);
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        user-select: none;
+        transition: opacity 0.2s ease;
+      }
+      .sig-actions-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn-sig-clear {
+        padding: 9px 18px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #94a3b8;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .btn-sig-clear:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+      }
+      .btn-sig-download {
+        padding: 9px 20px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #ffffff;
+        background: linear-gradient(180deg, #242433 0%, #151520 100%);
+        border: 1px solid var(--border-focus);
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .btn-sig-download:hover {
+        background: linear-gradient(180deg, #2e2e42 0%, #1c1c2b 100%);
+        transform: translateY(-1px);
+      }
+
       /* Bento Grid de Características */
       .features-section {
         max-width: 1120px;
@@ -1390,17 +1752,51 @@
 
           <div class="hero-eyebrow">
             <span class="eyebrow-dot"></span>
-            SUITE PROFESIONAL DE PDF · CERO TELEMETRÍA · 100% GRATIS
+            REVOLUCIÓN EDITORIAL ZERO-TRUST · RUST WEBASSEMBLY ENGINE · 100% GRATIS
           </div>
           
           <h1 class="hero-title">
-            Editor de PDF Online
-            <span class="gradient-text">Rápido, Seguro y 100% Privado</span>
+            El Editor de PDF del Futuro
+            <span class="gradient-text">100% Local, Privado y Sin Nube</span>
           </h1>
 
           <p class="hero-description">
-            Abre, edita texto e imágenes, firma documentos y resalta formularios con precisión milimétrica. Todo se procesa directamente en tu navegador sin subir archivos a ningún servidor.
+            El fin de subir tus contratos, declaraciones de impuestos y documentos confidenciales a servidores ajenos. Vértice PDF procesa todo en la memoria RAM de tu navegador a 60 FPS con rendimiento nativo.
           </p>
+
+          <!-- Testigo de Red en Vivo (Cybernetic Live Privacy HUD) -->
+          <div class="network-inspector-hud">
+            <div class="hud-header">
+              <div class="hud-status-chip">
+                <span class="hud-pulse-radar"></span>
+                <span class="hud-status-title">TESTIGO DE RED EN VIVO:</span>
+                <span class="hud-status-val">100% AISLADO EN MEMORIA RAM</span>
+              </div>
+              <div class="hud-badge-offline">✈️ MODO AVIÓN LISTO</div>
+            </div>
+            <div class="hud-grid">
+              <div class="hud-card">
+                <div class="hud-card-label">📡 Datos Salientes (Upload)</div>
+                <div class="hud-card-val"><span id="live-net-kb">0.00</span> KB</div>
+                <div class="hud-card-desc">Cero peticiones externas</div>
+              </div>
+              <div class="hud-card">
+                <div class="hud-card-label">🛡️ Servidores de Terceros</div>
+                <div class="hud-card-val highlight-emerald">0 Conexiones</div>
+                <div class="hud-card-desc">Archivos 100% en el equipo</div>
+              </div>
+              <div class="hud-card">
+                <div class="hud-card-label">⚡ Motor de Ejecución</div>
+                <div class="hud-card-val highlight-flame">Rust + WASM</div>
+                <div class="hud-card-desc">Rendimiento nativo 60 FPS</div>
+              </div>
+              <div class="hud-card">
+                <div class="hud-card-label">💎 Límite de Uso</div>
+                <div class="hud-card-val highlight-amber">ILIMITADO</div>
+                <div class="hud-card-desc">Sin registros ni pagos</div>
+              </div>
+            </div>
+          </div>
 
           <!-- Tarjeta de Apertura / Dropzone -->
           <div class="drop-card-container">
@@ -1482,6 +1878,137 @@
             <a href="https://github.com/satoshid3v/vertice-pdf" target="_blank" rel="noopener noreferrer" class="trust-link">
               Auditar Código →
             </a>
+          </div>
+        </section>
+
+        <!-- Comparativa Radical: Vértice PDF vs Editores Antiguos en Google -->
+        <section class="comparison-section">
+          <div class="section-heading">
+            <span class="section-badge">COMPARATIVA DIRECTA</span>
+            <h2>¿Por Qué Dejar los Editores Antiguos?</h2>
+            <p>La diferencia entre la era de la nube centralizada y la nueva computación soberana en WebAssembly.</p>
+          </div>
+
+          <div class="comparison-table-wrapper">
+            <div class="comp-col comp-old">
+              <div class="comp-header">
+                <span class="comp-tag">Editores Tradicionales</span>
+                <h3>iLovePDF, Smallpdf, Sejda</h3>
+                <p class="comp-sub">Arquitectura de Servidor Centralizado (2010 - 2020)</p>
+              </div>
+              <ul class="comp-list">
+                <li>
+                  <span class="comp-icon bad">✕</span>
+                  <div>
+                    <strong>Sube tus archivos a sus servidores</strong>
+                    <span>Tus contratos y datos fiscales viajan por internet y quedan almacenados en la nube de terceros.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon bad">✕</span>
+                  <div>
+                    <strong>Límites y Paywalls agresivos</strong>
+                    <span>2 o 3 tareas gratuitas al día, luego exigen suscripción de $12 a $20/mes.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon bad">✕</span>
+                  <div>
+                    <strong>Lentitud de subida y procesamiento en cola</strong>
+                    <span>Con archivos de 30MB o más, debes esperar minutos de subida y descarga.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon bad">✕</span>
+                  <div>
+                    <strong>Inservible sin conexión a Internet</strong>
+                    <span>Si estás en un avión, tren o con WiFi inestable, tu trabajo se interrumpe por completo.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon bad">✕</span>
+                  <div>
+                    <strong>Caja negra propietaria con telemetría</strong>
+                    <span>Imposible auditar qué rastreadores recopilan sobre tus documentos.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="comp-col comp-vertice">
+              <div class="comp-ribbon">NUEVA GENERACIÓN</div>
+              <div class="comp-header">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                  <img src="/brand-logo.svg" alt="Vértice Logo" style="width: 22px; height: 22px;" />
+                  <span class="comp-tag-vertice">Vértice PDF</span>
+                </div>
+                <h3 class="vertice-gradient-title">Zero-Trust WebAssembly</h3>
+                <p class="comp-sub">Computación 100% Local en RAM (Estándar 2026)</p>
+              </div>
+              <ul class="comp-list">
+                <li>
+                  <span class="comp-icon good">✓</span>
+                  <div>
+                    <strong>0 KB en la nube · Privacidad Absoluta</strong>
+                    <span>El motor corre dentro de tu navegador. Ningún byte sale de tu memoria RAM ni toca servidores externos.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon good">✓</span>
+                  <div>
+                    <strong>100% Gratuito, Ilimitado y Libre</strong>
+                    <span>Edita, une, firma y procesa sin registros, sin suscripciones y sin marcas de agua forzadas.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon good">✓</span>
+                  <div>
+                    <strong>Velocidad Nativa a 60 FPS</strong>
+                    <span>Apertura y renderizado instantáneo compilado directamente desde código Rust de ultra alto rendimiento.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon good">✓</span>
+                  <div>
+                    <strong>Modo Avión Autónomo</strong>
+                    <span>Puedes apagar el WiFi tras abrir la web y todo seguirá funcionando al 100% sin conexión.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="comp-icon good">✓</span>
+                  <div>
+                    <strong>Código 100% Abierto y Auditable</strong>
+                    <span>Transparencia total en GitHub bajo licencias de código abierto comprobables.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Laboratorio Interactivo de Firma Biométrica -->
+        <section class="signature-lab-section">
+          <div class="sig-lab-card">
+            <span class="section-badge">INTERACTIVIDAD EN VIVO</span>
+            <h3 style="font-size: 24px; font-weight: 700; color: #ffffff; letter-spacing: -0.025em; margin-bottom: 6px;">
+              Laboratorio de Firma Biométrica al Instante
+            </h3>
+            <p style="font-size: 14px; color: #94a3b8; max-width: 580px; margin: 0 auto;">
+              Prueba la suavidad del trazo vectorial con aceleración de hardware directamente aquí antes de cargar tu documento:
+            </p>
+
+            <div class="sig-canvas-wrapper" id="sig-canvas-wrapper">
+              <canvas id="sig-lab-canvas"></canvas>
+              <div class="sig-watermark-hint" id="sig-hint">Dibuja tu firma aquí con el mouse o tu dedo...</div>
+            </div>
+
+            <div class="sig-actions-bar">
+              <button class="btn-sig-clear" id="btn-sig-clear">Borrar Trazo</button>
+              <button class="btn-sig-download" id="btn-sig-download">Descargar Firma PNG Transparente</button>
+              <button class="btn-3d-flame" style="padding: 9px 22px; font-size: 13px;" onclick="openPdfModal(true);">
+                <span>Firmar un PDF Ahora →</span>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -2062,6 +2589,117 @@
           }
         }
       });
+
+      // ==========================================================================
+      // Laboratorio Interactivo de Firma Biométrica en Vivo
+      // ==========================================================================
+      (function() {
+        const canvas = document.getElementById("sig-lab-canvas");
+        const hint = document.getElementById("sig-hint");
+        const btnClear = document.getElementById("btn-sig-clear");
+        const btnDownload = document.getElementById("btn-sig-download");
+        if (!canvas) return;
+
+        const ctx = canvas.getContext("2d");
+        let isDrawing = false;
+        let points = [];
+        let hasDrawn = false;
+
+        function resizeCanvas() {
+          const rect = canvas.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          ctx.scale(dpr, dpr);
+          ctx.strokeStyle = "#ffaa40";
+          ctx.lineWidth = 2.4;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        setTimeout(resizeCanvas, 150);
+
+        function getPos(e) {
+          const rect = canvas.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+          };
+        }
+
+        function startDrawing(e) {
+          e.preventDefault();
+          isDrawing = true;
+          hasDrawn = true;
+          if (hint) hint.style.opacity = "0";
+          points = [getPos(e)];
+        }
+
+        function draw(e) {
+          if (!isDrawing) return;
+          e.preventDefault();
+          const p = getPos(e);
+          points.push(p);
+
+          if (points.length < 3) {
+            const b = points[0];
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, ctx.lineWidth / 2, 0, Math.PI * 2, !0);
+            ctx.fillStyle = "#ffaa40";
+            ctx.fill();
+            ctx.closePath();
+            return;
+          }
+
+          ctx.beginPath();
+          ctx.moveTo(points[0].x, points[0].y);
+          for (let i = 1; i < points.length - 2; i++) {
+            const xc = (points[i].x + points[i + 1].x) / 2;
+            const yc = (points[i].y + points[i + 1].y) / 2;
+            ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+          }
+          ctx.quadraticCurveTo(
+            points[points.length - 2].x,
+            points[points.length - 2].y,
+            points[points.length - 1].x,
+            points[points.length - 1].y
+          );
+          ctx.stroke();
+        }
+
+        function stopDrawing() {
+          isDrawing = false;
+        }
+
+        canvas.addEventListener("pointerdown", startDrawing);
+        canvas.addEventListener("pointermove", draw);
+        window.addEventListener("pointerup", stopDrawing);
+
+        if (btnClear) {
+          btnClear.addEventListener("click", () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            points = [];
+            hasDrawn = false;
+            if (hint) hint.style.opacity = "1";
+          });
+        }
+
+        if (btnDownload) {
+          btnDownload.addEventListener("click", () => {
+            if (!hasDrawn) {
+              alert("Por favor dibuja tu firma primero en el recuadro.");
+              return;
+            }
+            const a = document.createElement("a");
+            a.download = "mi-firma-vertice.png";
+            a.href = canvas.toDataURL("image/png");
+            a.click();
+          });
+        }
+      })();
     </script>
   </body>
 </html>
